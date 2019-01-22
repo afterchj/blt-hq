@@ -19,7 +19,6 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     public List<User> getAll() {
-        userDao.getAll();
-        return  userDao.getAll();
+        return userDao.getAll();
     }
 }

@@ -1,14 +1,14 @@
-package com.tpadsz.after.util;
+package com.tpadsz.after.utils;
 
 /**
  * Created by hongjian.chen on 2018/8/1.
  */
 public enum Constants {
     SESSION_USERNAME("USERNAME"),
-    WEB_SSM("ws://ctc-hq.tpadsz.com/web_ssm/websocket"),
-    BLT_LIGHT("ws://ctc-hq.tpadsz.com/blt_light/websocket"),
+    WEB_SSM("ws://122.112.229.195/web-ssm/websocket"),
+    BLT_LIGHT("ws://122.112.229.195/blt-hq/websocket"),
     UICHANGE_BLT("ws://uichange.com/blt_light/websocket"),
-    TEST_URL("ws://localhost:8080/blt_light//websocket");
+    TEST_URL("ws://localhost:8080/blt-hq//websocket");
 
     private String username;
 

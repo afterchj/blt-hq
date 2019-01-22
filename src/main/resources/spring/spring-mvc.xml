@@ -18,11 +18,10 @@
     <mvc:resources mapping="/static/**" location="/static/"/>
     <!-- 开启注解模式 -->
 
-    <!--<bean id="socketClient" class="com.tpadsz.after.util.WSClientUtil"></bean>-->
+    <!--<bean id="socketClient" class="com.tpadsz.after.utilss.WSClientUtil"></bean>-->
     <!--  websocket消息接收与处理类 -->
-    <bean id="websocket" class="com.tpadsz.after.websocket.WebSocketEndPoint"/>
+    <bean id="websocket" class="com.tpadsz.after.websocket.WebSocketHandler"/>
     <!--<bean id="fileupload" class="com.tpadsz.after.websocket.FileUploadEndPoint"/>-->
-    <bean id="binarymessage" class="com.tpadsz.after.websocket.BinaryEndPoint"/>
     <bean class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
         <property name="maxTextMessageBufferSize" value="8192"/>
         <property name="maxBinaryMessageBufferSize" value="20000000"/>
@@ -43,16 +42,11 @@
     <!-- 该拦截器专门为WebSocket客户端服务的 -->
     <websocket:handlers>
         <websocket:mapping path="/websocket" handler="websocket"/>
-        <!--<websocket:handshake-interceptors>-->
-        <!--<bean class="com.tpadsz.after.websocket.HandshakeInterceptor"/>-->
-        <!--</websocket:handshake-interceptors>-->
+        <websocket:handshake-interceptors>
+            <bean class="com.tpadsz.after.websocket.HandshakeInterceptor"/>
+        </websocket:handshake-interceptors>
     </websocket:handlers>
 
-
-    <!-- 二进制消息处理 -->
-    <websocket:handlers>
-        <websocket:mapping path="/binarymessage" handler="binarymessage"/>
-    </websocket:handlers>
 
     <!--定义跳转的文件的前后缀 ，视图模式配置 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

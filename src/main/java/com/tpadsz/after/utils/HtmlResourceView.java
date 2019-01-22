@@ -1,4 +1,4 @@
-package com.tpadsz.after.util;
+package com.tpadsz.after.utils;
 
 import org.springframework.web.servlet.view.InternalResourceView;
 

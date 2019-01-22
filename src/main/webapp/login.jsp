@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -13,7 +13,7 @@
 <body>
 <%--<input type="text" id="result" hidden="false" value="<%=result%>">--%>
 <div align="center" style="margin-top: 10%">
-    <form method="post" action="login" onsubmit="return check(this)" class="bs-example bs-example-form" role="form">
+    <form method="post" action="login" class="bs-example bs-example-form" role="form">
         <table>
             <tr>
                 <td colspan="2">

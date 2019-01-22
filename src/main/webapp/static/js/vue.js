@@ -254,7 +254,7 @@ function once (fn) {
 
 var config = {
   /**
-   * Option merge strategies (used in core/util/options)
+   * Option merge strategies (used in core/utils/options)
    */
   optionMergeStrategies: Object.create(null),
 
@@ -4020,7 +4020,7 @@ function initGlobalAPI (Vue) {
   }
   Object.defineProperty(Vue, 'config', configDef);
 
-  // exposed util methods.
+  // exposed utils methods.
   // NOTE: these are not considered part of the public API - avoid relying on
   // them unless you are aware of the risk.
   Vue.util = {
@@ -5857,7 +5857,7 @@ function updateDOMProps (oldVnode, vnode) {
   }
 }
 
-// check platforms/web/util/attrs.js acceptValue
+// check platforms/web/utils/attrs.js acceptValue
 
 
 function shouldUpdateValue (

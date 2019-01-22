@@ -1,6 +1,5 @@
-package com.tpadsz.after.util;
+package com.tpadsz.after.utils;
 
-import org.java_websocket.WebSocketImpl;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.*;
 import org.java_websocket.handshake.ServerHandshake;

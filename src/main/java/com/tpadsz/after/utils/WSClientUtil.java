@@ -1,6 +1,5 @@
-package com.tpadsz.after.util;
+package com.tpadsz.after.utils;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.log4j.Logger;
 import org.java_websocket.WebSocket;
@@ -20,13 +19,12 @@ public class WSClientUtil {
 
     private static WebSocketClient client = null;
 
-
     private static Logger logger = Logger.getLogger(WSClientUtil.class);
 
     public static void initClient() {
 
         try {
-            client = new WebSocketClient(new URI(Constants.TEST_URL.value()), new Draft_17()) {
+            client = new WebSocketClient(new URI(Constants.BLT_LIGHT.value()), new Draft_17()) {
                 @Override
                 public void onOpen(ServerHandshake arg0) {
 //                    System.out.println("打开链接");
@@ -34,7 +32,7 @@ public class WSClientUtil {
 
                 @Override
                 public void onMessage(String arg0) {
-                    System.out.println("收到消息->" + arg0);
+                    logger.info("收到消息->" + arg0);
                 }
 
                 @Override
@@ -51,10 +49,9 @@ public class WSClientUtil {
                 @Override
                 public void onMessage(ByteBuffer bytes) {
                     try {
-                        System.out.println(new String(bytes.array(), "utf-8"));
+                        logger.info("bytes=" + new String(bytes.array(), "utf-8"));
                     } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                        logger.error(e.getCause());
+                        logger.error(e.getMessage());
                     }
                 }
             };
@@ -71,7 +68,7 @@ public class WSClientUtil {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
         client.send(content);
@@ -86,12 +83,11 @@ public class WSClientUtil {
     }
 
 
-
     public static void main(String[] args) {
         JSONObject object = new JSONObject();
         object.put("from", "test");
         object.put("to", "admin");
         object.put("message", "hello admin");
-        sendMsg(JSON.toJSONString(object));
+        sendMsg("This is test message.");
     }
 }

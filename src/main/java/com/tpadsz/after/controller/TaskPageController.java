@@ -1,6 +1,6 @@
 package com.tpadsz.after.controller;
 
-import com.tpadsz.after.util.WSClient;
+import com.tpadsz.after.utils.WSClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
