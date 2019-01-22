@@ -1,7 +1,7 @@
 package com.tpadsz.after.socket;
 
 import com.tpadsz.after.service.BLTService;
-import com.tpadsz.after.utils.DButils;
+import com.tpadsz.after.utils.DBUtils;
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by hongjian.chen on 2018/3/1.
+ * Created by hongjian.chen on 2019/21/1.
  */
 
 public class SocketHandler implements Runnable {
@@ -55,19 +55,18 @@ public class SocketHandler implements Runnable {
         String ip = socket.getInetAddress().getHostAddress();
         map.put("ip", ip);
         logger.info("New connection accepted " + ip + ":" + socket.getPort());
-        SqlSessionTemplate sqlSessionTemplate = DButils.getSqlSession();
+        SqlSessionTemplate sqlSessionTemplate = DBUtils.getSqlSession();
         BufferedReader br = getReader(socket);
         PrintWriter pw = getWriter(socket);
         String msg;
         try {
             while ((msg = br.readLine()) != null) {
-                logger.info("receive:" + msg);
                 map.put("msg", msg);
                 sqlSessionTemplate.insert("light.insertLog", map);
                 pw.println(echo(msg));
             }
         } catch (IOException e) {
-            logger.error("status：" + e.getMessage());
+            logger.info("status:" + e.getMessage());
         } finally {
             try {
                 if (socket != null) socket.close();

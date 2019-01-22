@@ -9,13 +9,16 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Created by hongjian.chen on 2019/21/1.
+ */
 public class EchoServer {
 
     private static Logger logger = Logger.getLogger(EchoServer.class);
     private static EchoServer instance;
     private static ServerSocket serverSocket = null;
     private static ExecutorService executorService;  //线程池
-    private static final int POOL_SIZE = 10;  //单个CPU时线程池中工作线程的数目
+    private static final int POOL_SIZE = 100;  //单个CPU时线程池中工作线程的数目
 
     private static int port = 8000;
 

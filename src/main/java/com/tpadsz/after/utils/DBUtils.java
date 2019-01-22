@@ -7,7 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * Created by hongjian.chen on 2019/1/22.
  */
-public class DButils {
+public class DBUtils {
 
     private static SqlSessionTemplate sqlSessionTemplate;
 

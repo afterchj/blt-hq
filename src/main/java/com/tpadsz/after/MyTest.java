@@ -1,7 +1,6 @@
 package com.tpadsz.after;
 
-import com.tpadsz.after.socket.EchoServer;
-import com.tpadsz.after.utils.DButils;
+import com.tpadsz.after.utils.DBUtils;
 import com.tpadsz.after.utils.PropertiesUtils;
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -40,11 +39,10 @@ public class MyTest {
             Constructor constructor = clz.getConstructor();
             Object object = constructor.newInstance();
             for (Method method : methods) {
-                if (method.getName().equals("service")){
+                if (method.getName().equals("service")) {
                     method.setAccessible(true);
                     method.invoke(object);
                 }
-                System.out.println(method.getName());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,7 +57,7 @@ public class MyTest {
 
     @Test
     public void testDB() {
-        SqlSessionTemplate sqlSessionTemplate = DButils.getSqlSession();
+        SqlSessionTemplate sqlSessionTemplate = DBUtils.getSqlSession();
         System.out.println(sqlSessionTemplate.selectList("light.getLights").size());
     }
 }
