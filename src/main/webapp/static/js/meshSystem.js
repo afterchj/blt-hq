@@ -45,7 +45,7 @@ var url = null;
 var ws = null;
 
 function connect() {
-    url = 'ws://' + window.location.host + '/blt_light/websocket';
+    url = 'ws://' + window.location.host + '/blt-hq/websocket';
     ws = new WebSocket(url);
     console.log('url', url);
     ws.onopen = function () {
@@ -69,10 +69,10 @@ function switchLights() {
     var switchFlag;
     if (fd == 0) {
         document.getElementById("switch").value = "开灯";
-        switchFlag = 2;
+        switchFlag = 1;
     } else if (fd == -1) {
         document.getElementById("switch").value = "关灯";
-        switchFlag = 1;
+        switchFlag = 0;
     }
     ws.send(switchFlag.toString());
 }
