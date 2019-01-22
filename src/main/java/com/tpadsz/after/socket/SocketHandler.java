@@ -15,7 +15,9 @@ import java.util.Map;
  */
 
 public class SocketHandler implements Runnable {
+
     private Logger logger = Logger.getLogger(BLTService.class);
+    private static SqlSessionTemplate sqlSessionTemplate = DBUtils.getSqlSession();
 
     private Socket socket;
 
@@ -55,14 +57,14 @@ public class SocketHandler implements Runnable {
         String ip = socket.getInetAddress().getHostAddress();
         map.put("ip", ip);
         logger.info("New connection accepted " + ip + ":" + socket.getPort());
-        SqlSessionTemplate sqlSessionTemplate = DBUtils.getSqlSession();
         BufferedReader br = getReader(socket);
         PrintWriter pw = getWriter(socket);
         String msg;
         try {
             while ((msg = br.readLine()) != null) {
+                logger.info(msg);
                 map.put("msg", msg);
-                sqlSessionTemplate.insert("light.insertLog", map);
+//                sqlSessionTemplate.insert("light.insertLog", map);
                 pw.println(echo(msg));
             }
         } catch (IOException e) {
