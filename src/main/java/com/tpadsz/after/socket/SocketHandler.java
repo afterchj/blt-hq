@@ -54,7 +54,7 @@ public class SocketHandler implements Runnable {
         Map<String, String> map = new HashMap<>();
         String ip = socket.getInetAddress().getHostAddress();
         map.put("ip", ip);
-        System.out.println("New connection accepted " + ip + ":" + socket.getPort());
+        logger.info("New connection accepted " + ip + ":" + socket.getPort());
         SqlSessionTemplate sqlSessionTemplate = DButils.getSqlSession();
         BufferedReader br = getReader(socket);
         PrintWriter pw = getWriter(socket);

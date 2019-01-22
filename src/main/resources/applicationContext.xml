@@ -52,6 +52,10 @@
         <property name="maxWait" value="${maxWait}"/>
         <!-- 最小空闲连接数 -->
         <property name="minIdle" value="${minIdle}"/>
+        <property name="validationQuery" value="SELECT 'x'" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
 
     </bean>
     <!-- JDBC 事务管理器, 在service层面上实现事务管理 -->

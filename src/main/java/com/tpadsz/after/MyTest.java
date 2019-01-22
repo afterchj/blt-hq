@@ -1,15 +1,14 @@
 package com.tpadsz.after;
 
+import com.tpadsz.after.socket.EchoServer;
 import com.tpadsz.after.utils.DButils;
 import com.tpadsz.after.utils.PropertiesUtils;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.mybatis.spring.SqlSessionTemplate;
 
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.net.ServerSocket;
 
 /**
  * Created by hongjian.chen on 2018/8/1.
@@ -32,21 +31,31 @@ public class MyTest {
     }
 
 
-//    @Test
-//    public void test() {
-//        Class clz;
-//        try {
-//            ServerSocket serverSocket = new ServerSocket(8000);
-//            clz = Class.forName(PropertiesUtils.getValue("className"));
-//            Method method = clz.getMethod("service");
-//            Constructor constructor = clz.getConstructor(ServerSocket.class);
-//            Object object = constructor.newInstance(serverSocket);
-//            method.invoke(object);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            logger.error(e.getMessage());
-//        }
-//    }
+    @Test
+    public void test1() {
+        Class clz;
+        try {
+            clz = Class.forName(PropertiesUtils.getValue("className"));
+            Method[] methods = clz.getDeclaredMethods();
+            Constructor constructor = clz.getConstructor();
+            Object object = constructor.newInstance();
+            for (Method method : methods) {
+                if (method.getName().equals("service")){
+                    method.setAccessible(true);
+                    method.invoke(object);
+                }
+                System.out.println(method.getName());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testSingleton() {
+//        EchoServer.getInstance().service();
+    }
 
     @Test
     public void testDB() {
