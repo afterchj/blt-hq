@@ -11,15 +11,14 @@
        http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 第一种方式：加载一个properties文件 -->
-    <!--<context:property-placeholder-->
-    <!--ignore-resource-not-found="true"-->
-    <!--location="classpath:jdbc.properties"/>-->
+    <context:property-placeholder
+            ignore-resource-not-found="true"
+            location="classpath:jdbc.properties,classpath:common.properties"/>
 
     <!--第二种方式：加载一个properties文件-->
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="classpath:jdbc.properties"/>
-    </bean>
-
+    <!--<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+    <!--<property name="location" value="classpath:jdbc.properties"/>-->
+    <!--</bean>-->
 
     <!-- 第三种方式：加载多个properties文件
     <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
@@ -52,10 +51,10 @@
         <property name="maxWait" value="${maxWait}"/>
         <!-- 最小空闲连接数 -->
         <property name="minIdle" value="${minIdle}"/>
-        <property name="validationQuery" value="SELECT 'x'" />
-        <property name="testWhileIdle" value="true" />
-        <property name="testOnBorrow" value="false" />
-        <property name="testOnReturn" value="false" />
+        <property name="validationQuery" value="SELECT 'x'"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
 
     </bean>
     <!-- JDBC 事务管理器, 在service层面上实现事务管理 -->
