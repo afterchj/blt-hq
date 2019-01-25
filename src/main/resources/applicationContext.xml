@@ -10,17 +10,12 @@
        http://www.springframework.org/schema/aop
        http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
 
-    <!-- 第一种方式：加载一个properties文件 -->
-    <context:property-placeholder
-            ignore-resource-not-found="true"
-            location="classpath:jdbc.properties,classpath:common.properties"/>
-
     <!--第二种方式：加载一个properties文件-->
     <!--<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
     <!--<property name="location" value="classpath:jdbc.properties"/>-->
     <!--</bean>-->
 
-    <!-- 第三种方式：加载多个properties文件
+    <!-- 第三种方式：加载多个properties文件 -->
     <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="locations">
             <list>
@@ -33,7 +28,6 @@
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
         <property name="properties" ref="configProperties"/>
     </bean>
-    -->
     <!-- 开启注解模式 -->
     <context:component-scan base-package="com.tpadsz.after"/>
 

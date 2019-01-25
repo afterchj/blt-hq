@@ -8,6 +8,7 @@
         <parameter property="mesh_id" mode="IN"/>
         <parameter property="lmac" mode="IN"/>
         <parameter property="CODE" mode="IN"/>
+        <parameter property="code_version" mode="IN"/>
         <parameter property="GID" mode="IN"/>
         <parameter property="x" mode="IN"/>
         <parameter property="y" mode="IN"/>
@@ -25,6 +26,6 @@
     </insert>
 
     <select id="saveConsole" parameterMap="consoleMapper" statementType="CALLABLE">
-        CALL tbk.save_blt_console(?,?,?,?,?,?,?,?,?,?,?,?)
+        CALL save_blt_console(?,?,?,?,?,?,?,?,?,?,?,?,?)
     </select>
 </mapper>

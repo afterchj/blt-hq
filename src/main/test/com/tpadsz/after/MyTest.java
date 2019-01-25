@@ -10,6 +10,7 @@ import org.springframework.amqp.core.AmqpTemplate;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -60,12 +61,6 @@ public class MyTest {
     }
 
     @Test
-    public void testDB() {
-        SqlSessionTemplate sqlSessionTemplate = SpringUtils.getSqlSession();
-        System.out.println(sqlSessionTemplate.selectList("light.getLights").size());
-    }
-
-    @Test
     public void testRabbit() throws InterruptedException {
 //        Thread.sleep(3000);
         MessageProducer messageProducer = SpringUtils.getProducer();
@@ -105,20 +100,31 @@ public class MyTest {
         String statusInfo = "02F0ACD700950108080808F0ACD700920301101000";
         String cmd = "03F0ACD700950108080808000000000000c1011010";
         String prefix = cmd.substring(0, 2);
-        Map<String, String> map = formatStr(prefix, cmd);
+        Map<String, Object> map = formatStr(prefix, cmd);
 
-        for (Map.Entry<String, String> entry : map.entrySet()) {
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
             System.out.println("key=" + entry.getKey() + ",value=" + entry.getValue());
         }
     }
 
-    public Map<String, String> formatStr(String prefix, String str) {
-        Map<String, String> map = new ConcurrentHashMap<>();
+    public Map<String, Object> formatStr(String prefix, String str) {
+        Map<String, Object> map = new ConcurrentHashMap<>();
+
         map.put("prefix_value", str.substring(0, 2));
         map.put("dmac", str.substring(2, 14));
         map.put("mesh_id", str.substring(14, 22));
         map.put("lmac", str.substring(22, 34));
+//        map.put("code", "");
+//        map.put("code_version", "");
+//        map.put("GID", "");
+//        map.put("x", "");
+//        map.put("y", "");
+//        map.put("ctype", "");
+//        map.put("cid", "");
+//        map.put("suffix_value", "");
+//        map.put("result", 0);
 
+        System.out.println(map.size());
         switch (prefix) {
             case "01":
                 map.put("code", str.substring(34, 38));
@@ -152,6 +158,18 @@ public class MyTest {
 //            map.put("y", str.substring(40, str.length()));
 //        }
         return map;
+    }
+
+    @Test
+    public void testDB() {
+        SqlSessionTemplate sqlSessionTemplate = SpringUtils.getSqlSession();
+//        System.out.println(sqlSessionTemplate.selectList("light.getLights").size());
+        String info = "01F0ACD700950108080808F0ACD700920300010304";
+        String statusInfo = "02F0ACD700950108080808F0ACD700920301101000";
+        String cmd = "03F0ACD700950108080808000000000000c1011010";
+        Map pram = formatStr("01", info);
+        sqlSessionTemplate.selectOne("light.saveConsole", pram);
+        System.out.println("result=" + pram.get("result"));
     }
 
 }
