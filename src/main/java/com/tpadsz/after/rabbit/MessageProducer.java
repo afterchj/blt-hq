@@ -1,7 +1,9 @@
 package com.tpadsz.after.rabbit;
 
+import com.tpadsz.after.utils.PropertiesUtils;
 import org.apache.log4j.Logger;
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -14,26 +16,22 @@ import javax.annotation.Resource;
 public class MessageProducer {
 
     private Logger logger = Logger.getLogger(MessageProducer.class);
+    private static final String ROUTING_KEY = PropertiesUtils.getValue("rabbitmq.key");
 
-    @Resource
+    @Autowired
     private AmqpTemplate rabbitTemplate;
 
-    public void send() {
-        String context = "hi, i am message all";
-        this.rabbitTemplate.convertAndSend("demoExchange", "topic.demo.message", context);
+    public void send(int i) {
+        String context = "hi, i am come from spring_exchange message all ";
+        rabbitTemplate.convertAndSend("spring_exchange", "topic.messages", context + i);
     }
 
     public void send1(int i) {
         String context = "hi, i am message * ";
-        this.rabbitTemplate.convertAndSend("demoExchange", "topic.demo.message", context + i);
+        rabbitTemplate.convertAndSend("spring_exchange", "topic.test.message", context + i);
     }
 
-    public void send2(int i) {
-        String context = "hi, i am messages # ";
-        this.rabbitTemplate.convertAndSend("demoExchange", "topic.messages", context + i);
-    }
-
-    public void sendMsg(int num) {
-        rabbitTemplate.convertAndSend("tpad-blt-console-queue", "来自蓝牙灯的的问候 " + (num));
+    public void sendMsg(String num) {
+        rabbitTemplate.convertAndSend(ROUTING_KEY, num);
     }
 }
