@@ -83,11 +83,11 @@ public class WSClientUtil {
     }
 
 
-    public static void main(String[] args) {
-        JSONObject object = new JSONObject();
-        object.put("from", "test");
-        object.put("to", "admin");
-        object.put("message", "hello admin");
-        sendMsg("This is test message.");
-    }
+//    public static void main(String[] args) {
+//        JSONObject object = new JSONObject();
+//        object.put("from", "test");
+//        object.put("to", "admin");
+//        object.put("message", "hello admin");
+//        sendMsg("This is test message.");
+//    }
 }

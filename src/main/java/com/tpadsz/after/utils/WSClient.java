@@ -56,11 +56,11 @@ public class WSClient {
         }
     }
 
-    public static void main(String[] args) {
-        String location1 = "ws://localhost:8080/blt_light/websocket";
-        String str="ws://ctc-hq.tpadsz.com/blt_light/websocket";
-        URI location = URI.create(Constants.TEST_URL.value());
-        WSClient ws = new WSClient(location);
-        ws.connect(location1);
-    }
+//    public static void main(String[] args) {
+//        String location1 = "ws://localhost:8080/blt_light/websocket";
+//        String str="ws://ctc-hq.tpadsz.com/blt_light/websocket";
+//        URI location = URI.create(Constants.TEST_URL.value());
+//        WSClient ws = new WSClient(location);
+//        ws.connect(location1);
+//    }
 }

@@ -1,4 +1,4 @@
-package com.tpadsz.after.socket;
+package com.tpadsz.after;
 
 import java.io.*;
 import java.net.Socket;
@@ -8,8 +8,8 @@ import java.net.Socket;
  */
 
 public class EchoClient {
-        private static String host = "122.112.229.195";
-//    private static String host = "127.0.0.1";
+//        private static String host = "122.112.229.195";
+    private static String host = "127.0.0.1";
     private static int port = 8000;
     private static final int length = 110;
     private Socket socket;

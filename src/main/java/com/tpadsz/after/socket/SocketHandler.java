@@ -1,14 +1,11 @@
 package com.tpadsz.after.socket;
 
-import com.tpadsz.after.rabbit.MessageProducer;
-import com.tpadsz.after.service.BLTService;
+import com.alibaba.fastjson.JSON;
 import com.tpadsz.after.utils.PropertiesUtils;
 import com.tpadsz.after.utils.SpringUtils;
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.net.Socket;
@@ -22,12 +19,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class SocketHandler implements Runnable {
 
-    private Logger logger = Logger.getLogger(BLTService.class);
+    private Logger logger = Logger.getLogger(SocketHandler.class);
     private static final String ROUTING_KEY = PropertiesUtils.getValue("rabbitmq.key");
-
     private static SqlSessionTemplate sqlSessionTemplate = SpringUtils.getSqlSession();
-//    private static AmqpTemplate amqpTemplate = SpringUtils.getAmqpTemplate();
-
+    private static AmqpTemplate amqpTemplate = SpringUtils.getAmqpTemplate();
     private Socket socket;
 
     public SocketHandler(Socket socket) {
@@ -62,10 +57,10 @@ public class SocketHandler implements Runnable {
 
 
     public void run() {
-//        Map map = new HashMap<>();
         String ip = socket.getInetAddress().getHostAddress();
         int port = socket.getPort();
-//        map.put("ip", ip);
+        Map map = new HashMap<>();
+        map.put("ip", ip);
         logger.info("New connection accepted " + ip + ":" + port);
         BufferedReader br = getReader(socket);
         PrintWriter pw = getWriter(socket);
@@ -75,13 +70,12 @@ public class SocketHandler implements Runnable {
                 int len = msg.length();
                 if (len >= 36 && len <= 40) {
                     tempFormat(msg);
-                }
-                if (len > 40) {
+                } else if (len > 40) {
                     formatStr(msg);
+                } else {
+                    map.put("msg", msg);
+                    amqpTemplate.convertAndSend(ROUTING_KEY, JSON.toJSONString(map));
                 }
-//                map.put("msg", msg);
-//                amqpTemplate.convertAndSend(ROUTING_KEY, msg);
-//                sqlSessionTemplate.insert("light.insertLog", map);
                 pw.println(echo(msg));
             }
         } catch (IOException e) {
@@ -117,17 +111,13 @@ public class SocketHandler implements Runnable {
                 map.put("cid", str.substring(len - 4, len - 2));
                 break;
             default:
-                if ("C1".equals(prefix) || "C4".equals(prefix)) {
+                if ("C1".equals(prefix) || "C4".equals(prefix) || "71".equals(prefix)) {
                     map.put("ctype", prefix);
                     map.put("x", str.substring(2, 4));
                     map.put("y", str.substring(4, 6));
-                    map.put("cid", str.substring(len - 4, len - 2));
-                }
-                if ("71".equals(prefix)) {
-                    map.put("ctype", prefix);
-                    map.put("x", str.substring(2, 4));
-                    map.put("y", str.substring(4, 6));
-                    map.put("cid", "");
+                    if (!"71".equals(prefix)) {
+                        map.put("cid", str.substring(len - 4, len - 2));
+                    }
                 }
                 break;
         }

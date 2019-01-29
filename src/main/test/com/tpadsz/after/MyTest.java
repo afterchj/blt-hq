@@ -1,5 +1,6 @@
 package com.tpadsz.after;
 
+import com.alibaba.fastjson.JSON;
 import com.tpadsz.after.rabbit.MessageProducer;
 import com.tpadsz.after.utils.SpringUtils;
 import com.tpadsz.after.utils.PropertiesUtils;
@@ -66,15 +67,16 @@ public class MyTest {
         MessageProducer messageProducer = SpringUtils.getProducer();
         AmqpTemplate amqpTemplate = SpringUtils.getAmqpTemplate();
         System.out.println("amqpTemplate=" + messageProducer);
+        Map map = new HashMap();
+        map.put("ip", "127.0.0.1");
         for (int i = 1; i < 101; i++) {
-//            amqpTemplate.convertAndSend("blt_light","blt_queue send message " + i);
-//            messageProducer.sendMsg("blt_queue send message " + i);
+//            amqpTemplate.convertAndSend("blt_light", "localhost test" + i);
             if (i % 2 == 0) {
-                messageProducer.send(i);
+                map.put("msg", "i % 2=" + i);
+                messageProducer.sendMsg(JSON.toJSONString(map));
             } else if (i % 3 == 0) {
-                messageProducer.send1(i);
-            } else {
-                messageProducer.sendMsg("direct_exchange send message " + i);
+                map.put("msg", "i % 3=" + i);
+                messageProducer.sendMsg(JSON.toJSONString(map));
             }
         }
         Thread.sleep(3000);
@@ -96,9 +98,9 @@ public class MyTest {
 
     @Test
     public void testSubstrix() {
-        System.out.println("c0".toUpperCase());
+        System.out.println("flag=" + "c4".toUpperCase().equals("C4"));
         String str = "77 04 0F 02 27 35 00 00 00 71 00 13 00 00 00 00 00 00 0E";
-        String c4="77 04 10 02 20 95 00 00 00 C4 5F 02 00 00 00 00 00 00 02 4F".replace(" ","");
+        String c4 = "77 04 10 02 20 95 00 00 00 C4 5F 02 00 00 00 00 00 00 02 4F".replace(" ", "");
         String str52 = "77 04 10 02 21 69 00 00 00 52 77 65 65 D7 AC F0 00 02 00 85".replace(" ", "");
         String format = "77 04 0E 02 2A 9D 01 00 00 C0 00 37 37 00 00 00 00 09".replace(" ", "");
         System.out.println(format + "\t" + format.length());
@@ -193,9 +195,9 @@ public class MyTest {
         SqlSessionTemplate sqlSessionTemplate = SpringUtils.getSqlSession();
 //        System.out.println(sqlSessionTemplate.selectList("light.getLights").size());
 //        String 71 = "77040F0227350000007100130000000000000E";
-        String c4="77 04 10 02 20 95 00 00 00 C4 5F 02 00 00 00 00 00 00 02 4F".replace(" ","");
-        String c1="77 04 10 02 20 9D 01 00 00 C1 32 32 00 00 00 00 00 00 02 1E".replace(" ","");
-        String str="77 04 0E 02 2A 9D 01 00 00 C0 00 37 37 00 00 00 00 09".replace(" ","");
+        String c4 = "77 04 10 02 20 95 00 00 00 C4 5F 02 00 00 00 00 00 00 02 4F".replace(" ", "");
+        String c1 = "77 04 10 02 20 9D 01 00 00 C1 32 32 00 00 00 00 00 00 02 1E".replace(" ", "");
+        String str = "77 04 0E 02 2A 9D 01 00 00 C0 00 37 37 00 00 00 00 09".replace(" ", "");
         String info = "01F0ACD700950108080808F0ACD700920300010304";
         String statusInfo = "02F0ACD700950108080808F0ACD700920301101000";
         String cmd = "03F0ACD700950108080808000000000000c1011010";

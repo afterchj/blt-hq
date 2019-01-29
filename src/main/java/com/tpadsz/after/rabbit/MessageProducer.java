@@ -3,10 +3,12 @@ package com.tpadsz.after.rabbit;
 import com.tpadsz.after.utils.PropertiesUtils;
 import org.apache.log4j.Logger;
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.utils.SerializationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * Created by hongjian.chen on 2019/1/23.
@@ -31,7 +33,7 @@ public class MessageProducer {
         rabbitTemplate.convertAndSend("spring_exchange", "topic.test.message", context + i);
     }
 
-    public void sendMsg(String num) {
-        rabbitTemplate.convertAndSend(ROUTING_KEY, num);
+    public void sendMsg(String msg) {
+        rabbitTemplate.convertAndSend(ROUTING_KEY, msg);
     }
 }
