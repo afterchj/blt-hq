@@ -3,12 +3,8 @@ package com.tpadsz.after.rabbit;
 import com.tpadsz.after.utils.PropertiesUtils;
 import org.apache.log4j.Logger;
 import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.utils.SerializationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
-import java.util.Map;
 
 /**
  * Created by hongjian.chen on 2019/1/23.
@@ -19,6 +15,7 @@ public class MessageProducer {
 
     private Logger logger = Logger.getLogger(MessageProducer.class);
     private static final String ROUTING_KEY = PropertiesUtils.getValue("rabbitmq.key");
+    private static final String ROUTING_KEY1 = PropertiesUtils.getValue("rabbitmq.key1");
 
     @Autowired
     private AmqpTemplate rabbitTemplate;
@@ -35,5 +32,8 @@ public class MessageProducer {
 
     public void sendMsg(String msg) {
         rabbitTemplate.convertAndSend(ROUTING_KEY, msg);
+    }
+    public void sendMsg1(String msg) {
+        rabbitTemplate.convertAndSend(ROUTING_KEY1, msg);
     }
 }

@@ -2,6 +2,7 @@ package com.tpadsz.after;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.junit.Test;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -17,4 +18,10 @@ public class Main {
 //        SqlSessionTemplate sessionTemplate= (SqlSessionTemplate) ctx.getBean("sqlSessionTemplate");
 //        System.out.println(sessionTemplate.selectList("com.tpadsz.after.dao.UserDao.getAll").size());
 //    }
+
+    @Test
+    public void testStr(){
+        String str="ED090000713232000000000000CC";
+        System.out.println(str.length());
+    }
 }

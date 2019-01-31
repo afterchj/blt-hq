@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.tpadsz.after.utils.PropertiesUtils;
 import com.tpadsz.after.utils.SpringUtils;
 import org.apache.log4j.Logger;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.amqp.core.AmqpTemplate;
 
 import java.io.*;
@@ -21,7 +20,8 @@ public class SocketHandler implements Runnable {
 
     private Logger logger = Logger.getLogger(SocketHandler.class);
     private static final String ROUTING_KEY = PropertiesUtils.getValue("rabbitmq.key");
-    private static SqlSessionTemplate sqlSessionTemplate = SpringUtils.getSqlSession();
+    private static final String ROUTING_KEY1 = PropertiesUtils.getValue("rabbitmq.key1");
+//    private static SqlSessionTemplate sqlSessionTemplate = SpringUtils.getSqlSession();
     private static AmqpTemplate amqpTemplate = SpringUtils.getAmqpTemplate();
     private Socket socket;
 
@@ -74,7 +74,7 @@ public class SocketHandler implements Runnable {
                     formatStr(msg);
                 } else {
                     map.put("msg", msg);
-                    amqpTemplate.convertAndSend(ROUTING_KEY, JSON.toJSONString(map));
+                    amqpTemplate.convertAndSend(ROUTING_KEY1, JSON.toJSONString(map));
                 }
                 pw.println(echo(msg));
             }
@@ -121,8 +121,9 @@ public class SocketHandler implements Runnable {
                 }
                 break;
         }
-        sqlSessionTemplate.selectOne("light.saveConsole", map);
-        logger.info("result=" + map.get("result"));
+        amqpTemplate.convertAndSend(ROUTING_KEY, JSON.toJSONString(map));
+//        sqlSessionTemplate.selectOne("light.saveConsole", map);
+//        logger.info("result=" + map.get("result"));
     }
 
     private void formatStr(String str) {
@@ -153,7 +154,8 @@ public class SocketHandler implements Runnable {
                 }
                 break;
         }
-        sqlSessionTemplate.selectOne("light.saveConsole", map);
-        logger.info("result=" + map.get("result"));
+        amqpTemplate.convertAndSend(ROUTING_KEY, JSON.toJSONString(map));
+//        sqlSessionTemplate.selectOne("light.saveConsole", map);
+//        logger.info("result=" + map.get("result"));
     }
 }

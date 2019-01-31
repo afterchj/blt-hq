@@ -69,15 +69,18 @@ public class MyTest {
         System.out.println("amqpTemplate=" + messageProducer);
         Map map = new HashMap();
         map.put("ip", "127.0.0.1");
-        for (int i = 1; i < 101; i++) {
+        for (int i = 1; i < 2; i++) {
+            map.put("msg", "i = " + i);
+            messageProducer.sendMsg(JSON.toJSONString(map));
+            messageProducer.sendMsg1(JSON.toJSONString(map));
 //            amqpTemplate.convertAndSend("blt_light", "localhost test" + i);
-            if (i % 2 == 0) {
-                map.put("msg", "i % 2=" + i);
-                messageProducer.sendMsg(JSON.toJSONString(map));
-            } else if (i % 3 == 0) {
-                map.put("msg", "i % 3=" + i);
-                messageProducer.sendMsg(JSON.toJSONString(map));
-            }
+//            if (i % 2 == 0) {
+//                map.put("msg", "i % 2=" + i);
+//                messageProducer.sendMsg1(JSON.toJSONString(map));
+//            } else if (i % 3 == 0) {
+//                map.put("msg", "i % 3=" + i);
+//                messageProducer.sendMsg(JSON.toJSONString(map));
+//            }
         }
         Thread.sleep(3000);
     }
