@@ -74,6 +74,7 @@ public class SocketHandler implements Runnable {
                     formatStr(msg);
                 } else {
                     map.put("msg", msg);
+//                    sqlSessionTemplate.insert("light.insertLog", map);
                     amqpTemplate.convertAndSend(ROUTING_KEY1, JSON.toJSONString(map));
                 }
                 pw.println(echo(msg));
