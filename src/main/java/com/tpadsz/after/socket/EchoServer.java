@@ -1,11 +1,14 @@
 package com.tpadsz.after.socket;
 
 
+import com.tpadsz.after.utils.PropertiesUtils;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -15,26 +18,25 @@ import java.util.concurrent.Executors;
 public class EchoServer {
 
     private static Logger logger = Logger.getLogger(EchoServer.class);
-    private static EchoServer instance;
     private static ServerSocket serverSocket = null;
     private static ExecutorService executorService;  //线程池
-    private static final int POOL_SIZE = 100;  //单个CPU时线程池中工作线程的数目
+    private static final int POOL_SIZE = 20;  //单个CPU时线程池中工作线程的数目
 
-    private static int port = 8000;
+    private static String port = PropertiesUtils.getValue("socket.port");
 
     static {
         try {
-            serverSocket = new ServerSocket(port);
+            serverSocket = new ServerSocket(Integer.valueOf(port));
             logger.info("服务器已启动...");
         } catch (IOException e) {
-            logger.error("serverSocket异常：" + e.getMessage());
+            logger.error("serverSocket启动异常：" + e.getMessage());
+            try {
+                serverSocket.close();
+            } catch (IOException e1) {
+                logger.error("serverSocket status：" + serverSocket);
+            }
         }
         executorService = Executors.newFixedThreadPool(POOL_SIZE);
-        instance = new EchoServer();
-    }
-
-    public static EchoServer getInstance() {
-        return instance;
     }
 
     private void service() {
@@ -44,8 +46,12 @@ public class EchoServer {
                 socket = serverSocket.accept();
                 executorService.execute(new SocketHandler(socket));
             } catch (IOException e) {
-                logger.error(e.getMessage());
+                logger.error("socket连接失败：" + e.getMessage());
             }
         }
+    }
+
+    public static void main(String[] args) {
+        new EchoServer().service();
     }
 }

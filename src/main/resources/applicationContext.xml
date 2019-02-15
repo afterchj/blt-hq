@@ -101,7 +101,7 @@
     </bean>
 
     <!-- 连接配置 -->
-    <rabbit:connection-factory id="myConnectionFactory" host="${rabbitmq.host}" port="${rabbitmq.port}"/>
+    <rabbit:connection-factory id="myConnectionFactory" host="${rabbitmq.host}" port="${rabbitmq.port}" username="guest" password="guest"/>
     <rabbit:admin id="mqAdmin" connection-factory="myConnectionFactory"/>
     <rabbit:template id="amqpTemplate" connection-factory="myConnectionFactory" exchange="direct_exchange"/>
     <rabbit:direct-exchange name="direct_exchange" durable="true" auto-delete="false" declared-by="mqAdmin">

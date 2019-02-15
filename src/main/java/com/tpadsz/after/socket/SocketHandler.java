@@ -21,7 +21,7 @@ public class SocketHandler implements Runnable {
     private Logger logger = Logger.getLogger(SocketHandler.class);
     private static final String ROUTING_KEY = PropertiesUtils.getValue("rabbitmq.key");
     private static final String ROUTING_KEY1 = PropertiesUtils.getValue("rabbitmq.key1");
-//    private static SqlSessionTemplate sqlSessionTemplate = SpringUtils.getSqlSession();
+    //    private static SqlSessionTemplate sqlSessionTemplate = SpringUtils.getSqlSession();
     private static AmqpTemplate amqpTemplate = SpringUtils.getAmqpTemplate();
     private Socket socket;
 
@@ -59,9 +59,9 @@ public class SocketHandler implements Runnable {
     public void run() {
         String ip = socket.getInetAddress().getHostAddress();
         int port = socket.getPort();
+        logger.info("New connection accepted " + ip + ":" + port);
         Map map = new HashMap<>();
         map.put("ip", ip);
-        logger.info("New connection accepted " + ip + ":" + port);
         BufferedReader br = getReader(socket);
         PrintWriter pw = getWriter(socket);
         String msg;
@@ -77,6 +77,7 @@ public class SocketHandler implements Runnable {
 //                    sqlSessionTemplate.insert("light.insertLog", map);
                     amqpTemplate.convertAndSend(ROUTING_KEY1, JSON.toJSONString(map));
                 }
+                logger.info("send message " + msg);
                 pw.println(echo(msg));
             }
         } catch (IOException e) {

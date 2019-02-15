@@ -31,9 +31,18 @@ public class MessageProducer {
     }
 
     public void sendMsg(String msg) {
-        rabbitTemplate.convertAndSend(ROUTING_KEY, msg);
+        try {
+            rabbitTemplate.convertAndSend(ROUTING_KEY, msg);
+        } catch (Exception e) {
+            logger.error("ROUTING_KEY消息发送失败：" + e.getMessage());
+        }
     }
+
     public void sendMsg1(String msg) {
-        rabbitTemplate.convertAndSend(ROUTING_KEY1, msg);
+        try {
+            rabbitTemplate.convertAndSend(ROUTING_KEY1, msg);
+        } catch (Exception e) {
+            logger.error("ROUTING_KEY1消息发送失败：" + e.getMessage());
+        }
     }
 }

@@ -21,7 +21,7 @@ public class Main {
 
     @Test
     public void testStr(){
-        String str="ED090000713232000000000000CC";
+        String str="77040E022AE5010000C000020400000000";
         System.out.println(str.length());
     }
 }
