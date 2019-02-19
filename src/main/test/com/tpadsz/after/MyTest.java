@@ -1,7 +1,6 @@
 package com.tpadsz.after;
 
 import com.alibaba.fastjson.JSON;
-import com.tpadsz.after.rabbit.MessageProducer;
 import com.tpadsz.after.utils.SpringUtils;
 import com.tpadsz.after.utils.PropertiesUtils;
 import org.apache.log4j.Logger;
@@ -56,27 +55,22 @@ public class MyTest {
         }
     }
 
-    @Test
-    public void testSingleton() {
-//        EchoServer.getInstance().service();
-    }
 
-    @Test
-    public void testRabbit() throws InterruptedException {
-//        Thread.sleep(3000);
-        MessageProducer messageProducer = SpringUtils.getProducer();
-        AmqpTemplate amqpTemplate = SpringUtils.getAmqpTemplate();
-        System.out.println("result=" + amqpTemplate + "\t" + messageProducer);
-        Map map = new HashMap();
-        map.put("ip", "127.0.0.1");
-        for (int i = 1; i < 21; i++) {
-            map.put("msg", "i = " + i);
-            messageProducer.sendMsg(JSON.toJSONString(map));
-            messageProducer.sendMsg1(JSON.toJSONString(map));
-//            amqpTemplate.convertAndSend("blt_light", "localhost test" + i);
-        }
-//        Thread.sleep(3000);
-    }
+//    @Test
+//    public void testRabbit() throws InterruptedException {
+////        Thread.sleep(3000);
+//        MessageProducer messageProducer = SpringUtils.getProducer();
+//        AmqpTemplate amqpTemplate = SpringUtils.getAmqpTemplate();
+//        System.out.println("result=" + amqpTemplate + "\t" + messageProducer);
+//        Map map = new HashMap();
+//        map.put("ip", "127.0.0.1");
+//        for (int i = 1; i < 21; i++) {
+//            map.put("msg", "i = " + i);
+//            messageProducer.sendMsg(JSON.toJSONString(map));
+//            messageProducer.sendMsg1(JSON.toJSONString(map));
+////            amqpTemplate.convertAndSend("blt_light", "localhost test" + i);
+//        }
+//    }
 
     @Test
     public void inverse() {

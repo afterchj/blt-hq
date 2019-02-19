@@ -51,7 +51,7 @@ public class EchoServer {
         }
     }
 
-    public static void main(String[] args) {
-        new EchoServer().service();
-    }
+//    public static void main(String[] args) {
+//        new EchoServer().service();
+//    }
 }

@@ -27,7 +27,7 @@ public class StartService implements InitializingBean {
         public void run() {
             Class clz;
             try {
-                clz = Class.forName(PropertiesUtils.getValue("className"));
+                clz = Class.forName(PropertiesUtils.getValue("className1"));
                 Method method = clz.getDeclaredMethod("service");
                 method.setAccessible(true);
                 Constructor constructor = clz.getConstructor();
