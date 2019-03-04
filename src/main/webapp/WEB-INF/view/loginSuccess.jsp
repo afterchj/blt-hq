@@ -10,7 +10,7 @@
 <body>
 	<!-- 登录成功自动跳转 -->
 	<script type="text/javascript">
-		var t = 5;//设定跳转的时间 
+		var t = 3;//设定跳转的时间
 		setInterval("refer()", 1000); //启动1秒定时 
 		function refer() {
 			if (t == 0) {

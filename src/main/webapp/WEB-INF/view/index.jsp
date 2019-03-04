@@ -50,8 +50,7 @@
                         <li class="dropdown"><a href="#"
                                                 class="dropdown-toggle glyphicon glyphicon-inbox"
                                                 data-toggle="dropdown">博客中心<strong class="caret"></strong></a>
-                            <c:if
-                                    test="${sessionScope.loginUser != null }">
+                            <c:if test="${loginUser != null }">
                             <ul class="dropdown-menu">
                                 <li><a href="user/toAddBlog"
                                        class="glyphicon glyphicon-pencil"> 写博客</a></li>
