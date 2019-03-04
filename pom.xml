@@ -157,7 +157,12 @@
             <version>2.3</version>
         </dependency>
 
-
+        <!-- pageHelper -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>4.0.0</version>
+        </dependency>
         <!-- dao -->
         <dependency>
             <groupId>mysql</groupId>

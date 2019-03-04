@@ -10,6 +10,9 @@
        http://www.springframework.org/schema/aop
        http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
 
+    <!-- 开启注解模式 -->
+    <context:component-scan base-package="com.tpadsz.after"/>
+    <import resource="application-shiro.xml" />
     <!--第二种方式：加载一个properties文件-->
     <!--<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
     <!--<property name="location" value="classpath:jdbc.properties"/>-->
@@ -28,8 +31,6 @@
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
         <property name="properties" ref="configProperties"/>
     </bean>
-    <!-- 开启注解模式 -->
-    <context:component-scan base-package="com.tpadsz.after"/>
 
     <!-- 阿里 druid数据库连接池 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">

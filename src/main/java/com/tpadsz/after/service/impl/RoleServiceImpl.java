@@ -1,7 +1,7 @@
 package com.tpadsz.after.service.impl;
 
-import com.luoxiao.dao.RoleDao;
-import com.luoxiao.service.RoleService;
+import com.tpadsz.after.dao.RoleDao;
+import com.tpadsz.after.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

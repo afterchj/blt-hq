@@ -1,8 +1,9 @@
 package com.tpadsz.after.service.impl;
 
-import com.luoxiao.dao.UserDao;
-import com.luoxiao.model.User;
-import com.luoxiao.service.UserService;
+
+import com.tpadsz.after.dao.UserDao;
+import com.tpadsz.after.entity.User;
+import com.tpadsz.after.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

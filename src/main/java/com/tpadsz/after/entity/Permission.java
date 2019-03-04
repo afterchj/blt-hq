@@ -1,7 +1,7 @@
 package com.tpadsz.after.entity;
 
 /**
- * @author losho
+ * @author after
  * @date 2017年1月10日
  */
 public class Permission {

@@ -1,26 +1,27 @@
-package com.tpadsz.after.service;
+package com.tpadsz.after.dao;
 
 
 import com.tpadsz.after.entity.User;
 
 import java.util.List;
 
-/**
- * @author after
- * @date 2017年1月16日
- */
-public interface UserService {
+public interface UserDao {
+
+	void deleteById(Integer id);
+	
+	int insert(User record);
+	
+	int insertSelective(User record);
+	
 	List<User> selectAll();
 	
 	User selectById(Integer id);
 	
 	User selectByUsername(String username);
 	
-	void save(User user);
+	int updateByIdSelective(User record);
 	
-	boolean userIsExist(String username);
-	
-	void deleteById(Integer id);
+	int updateById(User record);
 
 	void blockUserById(Integer id);
 

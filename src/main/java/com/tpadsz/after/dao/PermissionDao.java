@@ -1,9 +1,10 @@
 package com.tpadsz.after.dao;
 
-import com.luoxiao.model.Permission;
+
+import com.tpadsz.after.entity.Permission;
 
 /**
- * @author losho
+ * @author after
  * @date 2017年1月10日
  */
 public interface PermissionDao {

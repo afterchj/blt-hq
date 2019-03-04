@@ -24,7 +24,7 @@
                 <td colspan="2">
                     <div class="input-group">
                         <span class="input-group-addon">用户名：</span>
-                        <input type="text" name="userName" id="userName" placeholder="userName" class="form-control">
+                        <input type="text" name="username" id="userName" placeholder="userName" class="form-control">
                     </div>
                 </td>
             </tr>
