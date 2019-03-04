@@ -48,7 +48,6 @@ public class ServerMain {
             worker.shutdownGracefully();
         }
     }
-
     private ChannelFuture bind(final ServerBootstrap serverBootstrap, final int port) {
         return serverBootstrap.bind(port).addListener(future -> {
             if (future.isSuccess()) {
