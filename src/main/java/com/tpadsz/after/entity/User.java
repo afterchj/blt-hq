@@ -11,7 +11,7 @@ public class User {
     private String company;
     private String password;
     private String telephone;
-    private boolean isAdmin;
+    private boolean isAdmin;private String role;
 
     public int getId() {
         return id;
@@ -67,5 +67,9 @@ public class User {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
+    }
+
+    public String getRole() {
+        return role;
     }
 }
