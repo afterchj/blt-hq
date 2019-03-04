@@ -1,13 +1,13 @@
 package com.tpadsz.after.dao;
 
-import com.tpadsz.after.entity.User;
+import com.tpadsz.after.entity.SysUser;
 
 import java.util.List;
 
 /**
  * Created by after on 2018/8/5.
  */
-public interface UserDao {
+public interface SysUserDao {
 
-    List<User> getAll();
+    List<SysUser> getAll();
 }

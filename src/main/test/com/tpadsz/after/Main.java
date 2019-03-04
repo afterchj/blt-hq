@@ -16,7 +16,7 @@ public class Main {
 //    public static void main(String[] args) {
 //        ApplicationContext ctx=new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
 //        SqlSessionTemplate sessionTemplate= (SqlSessionTemplate) ctx.getBean("sqlSessionTemplate");
-//        System.out.println(sessionTemplate.selectList("com.tpadsz.after.dao.UserDao.getAll").size());
+//        System.out.println(sessionTemplate.selectList("com.tpadsz.after.dao.SysUserDao.getAll").size());
 //    }
 
     @Test
