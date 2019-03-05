@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
@@ -47,11 +46,11 @@
 
 	<!-- 标题 -->
 	<div class="container">
-		<h1>我的博客列表</h1>
+		<h3>我的博客列表</h3>
+		<div></div>
 	</div>
 	<!-- table -->
 	<div class="container">
-		<div class=""></div>
 		<c:if test="${page != null && page.getTotal() > 0 }">
 			<table class="table table-hover table-bordered">
 				<thead>
@@ -67,22 +66,15 @@
 					<c:forEach items="${page.list}" var="blog">
 						<tr>
 							<td class="blogId">${blog.id}</td>
-							<td><a
-								href="
-								${pageContext.request.contextPath }/user/blogContents?id=${blog.id }"
-								class="BContent">《 ${blog.title } 》</a></td>
-							<td><fmt:formatDate value="${blog.createTime }"
-									pattern="yyyy-MM-dd HH:mm:ss" /></td>
+							<td><a href="${pageContext.request.contextPath }/user/blogContents?id=${blog.id }" class="BContent">《 ${blog.title } 》</a></td>
+							<td><fmt:formatDate value="${blog.createTime }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 							<td>${blog.author }</td>
-							<td><a class="	glyphicon glyphicon-remove"
-								href="${pageContext.request.contextPath }/delete?id=${blog.id }" class="btn btn-danger" role="button">删除</a></td>
+							<td><a class="	glyphicon glyphicon-remove" href="${pageContext.request.contextPath }/delete?userId=${userId}&id=${blog.id }" class="btn btn-danger" role="button">删除</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 		</c:if>
-
-
 		<c:if test="${page != null && page.getTotal() > 0 }">
 			<nav style="text-align: center">
 			<ul class="pagination pagination-lg">
@@ -98,7 +90,6 @@
 			</ul>
 			</nav>
 		</c:if>
-
 	</div>
 </body>
 </html>

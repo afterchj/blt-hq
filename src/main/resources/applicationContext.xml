@@ -72,9 +72,6 @@
             <tx:method name="*" propagation="REQUIRED" isolation="DEFAULT"/>
         </tx:attributes>
     </tx:advice>
-
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
-
     <!-- 事物处理 -->
     <aop:config>
         <!--目录结构，该目录下类注解：@BLTService("xxxService")-->
@@ -89,6 +86,23 @@
         <property name="configLocation" value="classpath:mybatisConfig.xml"></property>
         <!-- mapper扫描 -->
         <property name="mapperLocations" value="classpath:mybatis/*.xml"></property>
+        <!-- 配置分页插件 -->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageHelper">
+                    <!-- 这里的几个配置主要演示如何使用，如果不理解，一定要去掉下面的配置 -->
+                    <property name="properties">
+                        <value>
+                            dialect=mysql
+                            reasonable=true
+                            supportMethodsArguments=true
+                            params=count=countSql
+                            autoRuntimeDialect=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
     </bean>
 
     <!-- DAO接口所在包名，Spring会自动查找其下的类 -->

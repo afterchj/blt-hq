@@ -33,11 +33,11 @@
 	</div>
 	</nav>
 	<form class="form-horizontal"
-		action="${pageContext.request.contextPath }/user/submitBlog"
+		action="${pageContext.request.contextPath }/user/submitBlog?userId=${userId}"
 		method="post" style="margin-top: 250px">
 		<div class="form-group">
 			<div class="col-md-3"></div>
-			<label for="inputTitle" class="control-label" id="title" >(标题推荐20字以内)</label>
+			<label for="title" class="control-label" id="title" >(标题推荐20字以内)</label>
 			<div class="col-md-5 text-left">
 				<input type="text" class="form-control" name="title" size="20" maxlength="20">
 			</div>

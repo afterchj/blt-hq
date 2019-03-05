@@ -28,7 +28,7 @@ import java.util.Date;
 @Component
 public class LogAspect {
 
-    private static Logger logger = Logger.getLogger(LogAspect.class.getName());
+    private static Logger logger = Logger.getLogger(LogAspect.class);
 
 
     @Autowired
@@ -67,11 +67,11 @@ public class LogAspect {
         try {
             log.setResult("执行成功");
             logService.insertLog(log);
-            logger.info(log);
-
+            logger.info("执行成功！");
         } catch (Throwable e) {
             log.setResult("执行失败");
             logService.insertLog(log);
+            logger.error("执行失败："+e.getMessage());
         }
     }
 
@@ -98,7 +98,6 @@ public class LogAspect {
                 log.setOperation(methodName);
                 log.setResult("执行成功");
                 logService.insertLog(log);//插入数据库
-                logger.info(log);
             }
         } catch (Throwable throwable) {
             log.setResult("执行失败");

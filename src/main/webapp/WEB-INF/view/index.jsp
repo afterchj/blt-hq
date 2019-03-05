@@ -1,20 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
-    <link rel="stylesheet"
-          href="${pageContext.request.contextPath }/style/css/bootstrap.min.css">
-    <link rel="stylesheet"
-          href="${pageContext.request.contextPath }/style/css/bootstrap-theme.min.css">
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/style/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/style/css/bootstrap-theme.min.css">
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
     <script src="${pageContext.request.contextPath }/style/js/jquery.min.js"></script>
 
-    <script
-            src="${pageContext.request.contextPath }/style/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath }/style/js/bootstrap.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>首页</title>
     <style type="text/css">
@@ -47,19 +42,17 @@
                      id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li class=""><a href="index" class="glyphicon glyphicon-home">首页</a></li>
-                        <li class="dropdown"><a href="#"
-                                                class="dropdown-toggle glyphicon glyphicon-inbox"
+                        <li class="dropdown"><a href="#" class="dropdown-toggle glyphicon glyphicon-inbox"
                                                 data-toggle="dropdown">博客中心<strong class="caret"></strong></a>
                             <c:if test="${loginUser != null }">
                             <ul class="dropdown-menu">
-                                <li><a href="user/toAddBlog"
-                                       class="glyphicon glyphicon-pencil"> 写博客</a></li>
-                                <li><a
-                                        href="${pageContext.request.contextPath }/user/blog_list?userId=${loginUser.id}"
-                                        class="glyphicon glyphicon-inbox"> 我的博客</a></li>
+                                <li><a href="user/toAddBlog" class="glyphicon glyphicon-pencil"> 写博客</a></li>
+                                <li><a href="${pageContext.request.contextPath }/user/blog_list?userId=${loginUser.id}"
+                                       class="glyphicon glyphicon-inbox"> 我的博客</a></li>
                             </ul>
                             <!-- 进入搜索页面 -->
                             </c:if>
+
                         <li><a href="search" class="glyphicon glyphicon-search">搜索智能提示</a></li>
                         <!-- 博客展示 -->
                         <li><a href="user/blogExample"
@@ -68,35 +61,33 @@
 
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <c:if test="${loginUser != null }">
-                            <li class="dropdown"><a href="#" class="dropdown-toggle"
-                                                    data-toggle="dropdown">[${loginUser.username }]<strong
-                                    class="caret"></strong></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="user/logOut"
-                                           class="glyphicon glyphicon-inbox"> 退出帐号</a></li>
-                                    <shiro:hasRole name="admin">
-                                        <li><a
-                                                href="${pageContext.request.contextPath }/cms/index"
-                                                class="glyphicon glyphicon-th-large"> 后台管理</a></li>
-                                    </shiro:hasRole>
-                                </ul>
-                            </li>
-                        </c:if>
+                        <%--<c:if test="${loginUser != null }">--%>
+                        <li class="dropdown"><a href="#" class="dropdown-toggle"
+                                                data-toggle="dropdown">[${loginUser.username }]<strong
+                                class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="user/logOut"
+                                       class="glyphicon glyphicon-inbox"> 退出帐号</a></li>
+                                <shiro:hasRole name="admin">
+                                    <li><a
+                                            href="${pageContext.request.contextPath }/cms/index"
+                                            class="glyphicon glyphicon-th-large"> 后台管理</a></li>
+                                </shiro:hasRole>
+                            </ul>
+                        </li>
+                        <%--</c:if>--%>
                         <li><a href="#">关于 </a></li>
                         <c:if test="${loginUser == null }">
                             <li><a data-toggle="modal" data-target="#loginModal" href=""><span
                                     class="glyphicon glyphicon-log-in"></span> 登录</a></li>
-                            <li><a href="user/register"><span
-                                    class="glyphicon glyphicon-user"></span> 注册 </a></li>
+                            <li><a href="user/register"><span class="glyphicon glyphicon-user"></span> 注册 </a></li>
                         </c:if>
 
                     </ul>
                 </div>
+            </nav>
         </div>
-        </nav>
     </div>
-
     <br> <br> <br> <br> <br> <br>
 </div>
 <!-- Content -->
@@ -201,24 +192,24 @@
         }
         /* ajax验证密码 */
         $.ajax({
-                type: "GET",
-                url: "validatePassword",
-                data: {
-                    "username": username
-                },
-                async: true,
-                success: function (data) {
-                    /* alert(password==data); */
-                    if (password == data) {
-                        $("#login1").submit();
-                    } else {
-                        $("#loginInfo")
-                            .html(
-                                "<b style='color:red;font-size:15px;'>用户名或密码错误！</b>");
-                    }
-                    /* alert(data); */
+            type: "GET",
+            url: "validatePassword",
+            data: {
+                "username": username
+            },
+            async: true,
+            success: function (data) {
+                /* alert(password==data); */
+                if (password == data) {
+                    $("#login1").submit();
+                } else {
+                    $("#loginInfo")
+                        .html(
+                            "<b style='color:red;font-size:15px;'>用户名或密码错误！</b>");
                 }
-            })
+                /* alert(data); */
+            }
+        })
     }
     /* Enter提交 */
     $(document).ready(function () {

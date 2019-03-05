@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.tpadsz.after.entity.Blog;
 import com.tpadsz.after.entity.User;
 import com.tpadsz.after.entity.UserRole;
+import com.tpadsz.after.entity.UserRoleTemp;
 import com.tpadsz.after.service.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -112,17 +114,16 @@ public class MainController {
      * 登录功能
      *
      * @param user
-     * @param model
      * @return
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(User user, HttpSession session, Model model) {
+    public String login(User user, HttpSession session) {
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword());
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
         User loginUser = userService.selectByUsername(user.getUsername());
         session.setAttribute("loginUser", loginUser);
-        System.out.println("pwd="+loginUser.getPassword());
+        System.out.println("pwd=" + loginUser.getPassword());
         return "/loginSuccess";
     }
 
@@ -197,6 +198,23 @@ public class MainController {
         return mv;
     }
 
+
+    @ResponseBody
+    @RequestMapping("/cms/userRoleList")
+    public List<UserRoleTemp> getUserRoleList() {
+        List<User> userList = userService.selectAll();
+        List<UserRoleTemp> userRoleList = new ArrayList<UserRoleTemp>();
+        for (User user : userList) {
+            List<String> roleList = userExtendService.getRoles(user
+                    .getUsername());
+            UserRoleTemp u = new UserRoleTemp();
+            u.setId(user.getId());
+            u.setUsername(user.getUsername());
+            u.setRoles(roleList);
+            userRoleList.add(u);
+        }
+        return userRoleList;
+    }
     /**
      * 跳转角色管理页面
      *
@@ -227,8 +245,39 @@ public class MainController {
         userRoleService.deleteById(id);
         return "redirect:/cms/userManage";
     }
+    /**
+     * 修改角色roles，并保存
+     *
+     * @param userId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updateRoles", method = RequestMethod.GET)
+    public UserRoleTemp updateRoles(
+            @RequestParam(value = "userId") Integer userId,
+            @RequestParam(value = "roleStr") String roleStr) {
+        UserRoleTemp u = new UserRoleTemp();
+        System.out.println(roleStr);
+        // 根据用户userId删除所有RoleId
+        userRoleService.deleteById(userId);
+        // 遍历角色名
+        String[] roleNames = roleStr.split(",");
+        for (int i = 0; i < roleNames.length; i++) {
+            Integer roleId = (roleService.getIdByRoleName(roleNames[i]));
+            // 插入新的数据到UserRole表
+            UserRole userRole = new UserRole();
+            userRole.setUserId(userId);
+            userRole.setRoleId(roleId);
+            userRoleService.insert(userRole);
+        }
 
-
+        User user = userService.selectById(userId);
+        List<String> roles = userExtendService.getRoles(user.getUsername());
+        u.setId(userId);
+        u.setRoles(roles);
+        u.setUsername(user.getUsername());
+        return u;
+    }
     /**
      * 禁用用户
      */
@@ -277,7 +326,7 @@ public class MainController {
             blog.setUserId(loginUser.getId());
             blog.setAuthor(loginUser.getUsername());
             blogService.insert(blog);
-            mv.setViewName("success/submitSuccess");
+            mv.setViewName("redirect:/user/blog_list?userId="+loginUser.getId());
         } catch (Exception e) {
             mv.setViewName("error/error");
             e.printStackTrace();
@@ -309,9 +358,7 @@ public class MainController {
      * @return page对象
      */
     @RequestMapping(value = "/user/blog_list", method = RequestMethod.GET)
-    public ModelAndView selectAllByUserId(Integer userId,
-                                          @RequestParam(required = false, defaultValue = "1") Integer page,
-                                          @RequestParam(required = false, defaultValue = "5") Integer rows) {
+    public ModelAndView selectAllByUserId(Integer userId, @RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "5") Integer rows) {
         ModelAndView mv = new ModelAndView();
         PageHelper.startPage(page, rows);
         List<Blog> list = blogService.selectAllbyUserId(userId, page, rows);
@@ -324,11 +371,9 @@ public class MainController {
 
     // 删除博客
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public ModelAndView delete(@RequestParam(value = "id") Integer id) {
-        ModelAndView mv = new ModelAndView();
+    public String delete(@RequestParam(value = "id") Integer id, Integer userId) {
         blogService.deleteById(id);
-        mv.setViewName("redirect:/user/blog_list");
-        return mv;
+        return "redirect:/user/blog_list?userId=" + userId;
     }
 
     /**

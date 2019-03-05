@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
  * Created by hongjian.chen on 2019/1/22.
  */
 
-@Service
+//@Service
 public class StartService implements InitializingBean {
 
     private Logger logger = Logger.getLogger(StartService.class);
