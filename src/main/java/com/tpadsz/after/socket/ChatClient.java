@@ -1,7 +1,6 @@
 package com.tpadsz.after.socket;
 
 import org.apache.log4j.Logger;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,8 +22,9 @@ public class ChatClient {
 
     public ChatClient() throws IOException {
 //        s = new Socket("127.0.0.1", 8000);
-        s = new Socket("122.112.229.195", 8001);
-//        s = new Socket("122.112.229.195", 8000);
+//        s = new Socket("127.0.0.1", 8001);
+//        s = new Socket("122.112.229.195", 8001);
+        s = new Socket("122.112.229.195", 8000);
     }
 
     public static void main(String[] args) throws IOException {

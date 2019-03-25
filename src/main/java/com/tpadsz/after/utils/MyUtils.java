@@ -3,7 +3,7 @@ package com.tpadsz.after.utils;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by losho
+ * Created by after
  */
 public class MyUtils {
 
