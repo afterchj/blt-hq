@@ -118,7 +118,7 @@ public class MainController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(User user, HttpSession session) {
-        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword());
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword(),user.getRememberMe());
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
         User loginUser = userService.selectByUsername(user.getUsername());

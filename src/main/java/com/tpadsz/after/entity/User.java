@@ -11,6 +11,8 @@ public class User {
     private String username;
 
     private String password;
+    private String salt;
+    private String mobile;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birth;
 
@@ -32,12 +34,19 @@ public class User {
     //状态码 0:禁用,1:正常
     private String status;
 
+    private String rememberMe;
+
+    private Date modifyTime;
+
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", mobile='" + mobile + '\'' +
                 ", birth=" + birth +
                 ", gender='" + gender + '\'' +
                 ", regTime=" + regTime +
@@ -102,4 +111,35 @@ public class User {
         this.email = email;
     }
 
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
+    }
+
+    public String getRememberMe() {
+        return rememberMe;
+    }
+
+    public void setRememberMe(String rememberMe) {
+        this.rememberMe = rememberMe;
+    }
 }

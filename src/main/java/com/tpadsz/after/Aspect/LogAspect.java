@@ -67,7 +67,6 @@ public class LogAspect {
         try {
             log.setResult("执行成功");
             logService.insertLog(log);
-            logger.info("执行成功！");
         } catch (Throwable e) {
             log.setResult("执行失败");
             logService.insertLog(log);
