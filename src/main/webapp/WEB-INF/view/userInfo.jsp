@@ -50,7 +50,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="sysUser" items="${sysUsers}">
+                            <c:forEach var="sysUser" items="${users}">
                                 <tr>
                                     <td>${sysUser.userName}</td>
                                     <td>${sysUser.company}</td>

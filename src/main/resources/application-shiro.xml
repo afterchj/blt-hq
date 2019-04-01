@@ -8,14 +8,14 @@
         <property name="authorizationCachingEnabled" value="false"/>
         <!-- 如果不加入密码匹配的操作，密码就不会存在 -->
         <!-- 加入了密码匹配器之后，就会默认将前台传递过来的密码自动MD5加密 -->
-        <property name="credentialsMatcher">
-            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <!--<property name="credentialsMatcher">-->
+            <!--<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">-->
                 <!-- 加密的方式 -->
-                <constructor-arg index="0" type="java.lang.String" value="MD5"/>
+                <!--<constructor-arg index="0" type="java.lang.String" value="MD5"/>-->
                 <!-- 加密的次数，默认是1次 -->
-                <property name="hashIterations" value="3"/>
-            </bean>
-        </property>
+                <!--<property name="hashIterations" value="2"/>-->
+            <!--</bean>-->
+        <!--</property>-->
     </bean>
 
     <!-- 给予shior的内存缓存系统 -->
@@ -58,7 +58,9 @@
             <value>
                 <!-- 静态文件 -->
                 /style/** = anon
-                //rest/** = anon
+                /static/** = anon
+                /rest/** = anon
+                /user/register = anon
                 /cms/** = authc,roles[admin]
                 /user/** = authc
                 /** = anon

@@ -28,6 +28,20 @@
 <%-- var url = "${pageContext.request.contextPath }/user/checkUser?username="
 					+ (username.value) + "&time=" + new Date().getTime(); --%>
 <script type="text/javascript">
+    $(function () {
+        var ul = document.getElementById("role");
+        $.get("/blt-hq/rest/roleList", function (data) {
+            $.each(data, function (i, role) {
+                var li = document.createElement("li");
+//                var id = role.id;
+//                var name = role.roleName;
+//                console.log("i=" + i + ",id=" + id + ",name=" + name);
+//                $("#role").append(" <li><input type='checkbox' name='roleName' value=" + id + ">&nbsp;" + name + "</li>");
+                li.innerHTML = "<input type='checkbox' name='roleName' value=" + role.id + ">&nbsp;" + role.roleName + "";
+                ul.appendChild(li);
+            })
+        })
+    })
     function validate() {
         var username = $("#username").val();
         var password = $("#password").val();
@@ -153,18 +167,18 @@
         <div class="form-group">
             <label class="control-label col-sm-3">角色</label>
             <%--<div class="col-sm-6">--%>
-            <div class="row" id="role">
+            <div class="row">
                 <%--<div class="col-sm-6">--%>
-                <ul style="list-style: none">
-                    <li>
-                        <input type="checkbox" name="roleName" value="1">&nbsp;admin
-                    </li>
-                    <li>
-                        <input type="checkbox" name="roleName" value="2">&nbsp;manager
-                    </li>
-                    <li>
-                        <input type="checkbox" name="roleName" value="3">&nbsp;user
-                    </li>
+                <ul style="list-style: none;width: 300px;text-align: center;float: right;margin-right: 30%" id="role">
+                    <%--<li>--%>
+                    <%--<input type="checkbox" name="roleName" value="1">&nbsp;admin--%>
+                    <%--</li>--%>
+                    <%--<li>--%>
+                    <%--<input type="checkbox" name="roleName" value="2">&nbsp;manager--%>
+                    <%--</li>--%>
+                    <%--<li>--%>
+                    <%--<input type="checkbox" name="roleName" value="3">&nbsp;user--%>
+                    <%--</li>--%>
                 </ul>
                 <%--</div>--%>
             </div>
