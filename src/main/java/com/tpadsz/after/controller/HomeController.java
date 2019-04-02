@@ -1,8 +1,8 @@
 package com.tpadsz.after.controller;
 
 
-import com.tpadsz.after.entity.User;
-import com.tpadsz.after.service.UserService;
+import com.tpadsz.after.entity.SysUser;
+import com.tpadsz.after.service.SysUserService;
 import com.tpadsz.after.utils.Constants;
 import com.tpadsz.after.utils.WSClientUtil;
 import org.apache.log4j.Logger;
@@ -29,7 +29,7 @@ import java.util.Map;
 public class HomeController {
 
     @Resource
-    private UserService userService;
+    private SysUserService sysUserService;
     private Logger log = Logger.getLogger(HomeController.class);
 
     @ResponseBody
@@ -74,8 +74,8 @@ public class HomeController {
 
     @RequestMapping(value = "/login")
     public String login(HttpSession session) {
-        List<User> users = userService.getAll();
-        session.setAttribute("users", users);
+        List<SysUser> sysUsers = sysUserService.getAll();
+        session.setAttribute("users", sysUsers);
         return "userInfo";
     }
 

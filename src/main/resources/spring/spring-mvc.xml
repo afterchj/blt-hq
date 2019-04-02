@@ -3,19 +3,21 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:websocket="http://www.springframework.org/schema/websocket"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
        http://www.springframework.org/schema/websocket
-       http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+       http://www.springframework.org/schema/websocket/spring-websocket.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <mvc:annotation-driven/>
     <!-- 开启注解模式 -->
     <context:component-scan base-package="com.tpadsz.after"/>
-
+    <!-- aop -->
+    <aop:aspectj-autoproxy expose-proxy="true"/>
     <!-- 静态资源映射 -->
     <mvc:resources mapping="/static/**" location="/static/"/>
+    <mvc:resources mapping="/style/**" location="/style/"/>
     <!-- 开启注解模式 -->
 
     <!--<bean id="socketClient" class="com.tpadsz.after.utilss.WSClientUtil"></bean>-->

@@ -1,7 +1,6 @@
 package com.tpadsz.after;
 
 import com.alibaba.fastjson.JSON;
-import com.tpadsz.after.rabbit.MessageProducer;
 import com.tpadsz.after.utils.SpringUtils;
 import com.tpadsz.after.utils.PropertiesUtils;
 import org.apache.log4j.Logger;
@@ -56,34 +55,22 @@ public class MyTest {
         }
     }
 
-    @Test
-    public void testSingleton() {
-//        EchoServer.getInstance().service();
-    }
 
-    @Test
-    public void testRabbit() throws InterruptedException {
-//        Thread.sleep(3000);
-        MessageProducer messageProducer = SpringUtils.getProducer();
-        AmqpTemplate amqpTemplate = SpringUtils.getAmqpTemplate();
-        System.out.println("amqpTemplate=" + messageProducer);
-        Map map = new HashMap();
-        map.put("ip", "127.0.0.1");
-        for (int i = 1; i < 2; i++) {
-            map.put("msg", "i = " + i);
-            messageProducer.sendMsg(JSON.toJSONString(map));
-            messageProducer.sendMsg1(JSON.toJSONString(map));
-//            amqpTemplate.convertAndSend("blt_light", "localhost test" + i);
-//            if (i % 2 == 0) {
-//                map.put("msg", "i % 2=" + i);
-//                messageProducer.sendMsg1(JSON.toJSONString(map));
-//            } else if (i % 3 == 0) {
-//                map.put("msg", "i % 3=" + i);
-//                messageProducer.sendMsg(JSON.toJSONString(map));
-//            }
-        }
-        Thread.sleep(3000);
-    }
+//    @Test
+//    public void testRabbit() throws InterruptedException {
+////        Thread.sleep(3000);
+//        MessageProducer messageProducer = SpringUtils.getProducer();
+//        AmqpTemplate amqpTemplate = SpringUtils.getAmqpTemplate();
+//        System.out.println("result=" + amqpTemplate + "\t" + messageProducer);
+//        Map map = new HashMap();
+//        map.put("ip", "127.0.0.1");
+//        for (int i = 1; i < 21; i++) {
+//            map.put("msg", "i = " + i);
+//            messageProducer.sendMsg(JSON.toJSONString(map));
+//            messageProducer.sendMsg1(JSON.toJSONString(map));
+////            amqpTemplate.convertAndSend("blt_light", "localhost test" + i);
+//        }
+//    }
 
     @Test
     public void inverse() {
@@ -91,28 +78,36 @@ public class MyTest {
         String hex = n1.toHexString(n1);
         System.out.println(hex);
         System.out.println("---------------分割线---------------");
-        String o_hex = "ff";
+        String o_hex = "3c";
         System.out.println(Integer.parseInt(o_hex, 16));
         System.out.println("---------------分割线---------------");
-        String p_hex = "0xabc";
+        String p_hex = "0x3C";
         Integer o = Integer.parseInt(p_hex.substring(2), 16);//从第2个字符开始截取
         System.out.println(o);
     }
 
     @Test
-    public void testSubstrix() {
+    public void testSubstring() {
         System.out.println("flag=" + "c4".toUpperCase().equals("C4"));
         String str = "77 04 0F 02 27 35 00 00 00 71 00 13 00 00 00 00 00 00 0E";
         String c4 = "77 04 10 02 20 95 00 00 00 C4 5F 02 00 00 00 00 00 00 02 4F".replace(" ", "");
         String str52 = "77 04 10 02 21 69 00 00 00 52 77 65 65 D7 AC F0 00 02 00 85".replace(" ", "");
         String format = "77 04 0E 02 2A 9D 01 00 00 C0 00 37 37 00 00 00 00 09".replace(" ", "");
-        System.out.println(format + "\t" + format.length());
+        String ca="77 04 0E 02 20 9D 01 00 00 CA 00".replace(" ", "");
+        String cb="77 04 0E 02 20 9D 01 00 00 CB 00".replace(" ", "");
+        String cc="77 04 0E 02 20 9D 01 00 00 CC 00 14 05 3C 02".replace(" ", "");
+        System.out.println(ca + "\t" + ca.length());
+        System.out.println(cb + "\t" + cb.length());
+        System.out.println(cc + "\t" + cc.length());
         System.out.println("77040F0227250000007132320000000000000D".length());
         System.out.println("77040F02272500000071020B00000000000004".length());
         String info = "01F0ACD700950108080808F0ACD700920300010304";
         String statusInfo = "02F0ACD700950108080808F0ACD700920301101000";
         String cmd = "03F0ACD700950108080808000000000000c1011010";
         String prefix = format.substring(18, 20);
+        String tmp = ca.substring(18, ca.length());
+        int len = tmp.length();
+        System.out.println("str="+tmp.substring(len - 2, len));
         Map<String, String> map = tempFormat(prefix, format.substring(18, format.length()));
 //        for (Map.Entry<String, String> entry : map.entrySet()) {
 //            System.out.println("key=" + entry.getKey() + ",value=" + entry.getValue());

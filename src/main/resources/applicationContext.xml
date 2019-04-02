@@ -3,33 +3,35 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
        http://www.springframework.org/schema/aop
-       http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+    <!-- 开启注解模式 -->
+    <context:component-scan base-package="com.tpadsz.after"/>
+    <import resource="application-shiro.xml"/>
     <!--第二种方式：加载一个properties文件-->
     <!--<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
     <!--<property name="location" value="classpath:jdbc.properties"/>-->
     <!--</bean>-->
 
     <!-- 第三种方式：加载多个properties文件 -->
-    <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-        <property name="locations">
-            <list>
-                <value>classpath:jdbc.properties</value>
-                <value>classpath:common.properties</value>
-            </list>
-        </property>
-        <property name="fileEncoding" value="UTF-8"/>
-    </bean>
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
-        <property name="properties" ref="configProperties"/>
-    </bean>
-    <!-- 开启注解模式 -->
-    <context:component-scan base-package="com.tpadsz.after"/>
+    <!--<bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">-->
+    <!--<property name="locations">-->
+    <!--<list>-->
+    <!--<value>classpath:jdbc.properties</value>-->
+    <!--<value>classpath:common.properties</value>-->
+    <!--</list>-->
+    <!--</property>-->
+    <!--<property name="fileEncoding" value="UTF-8"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">-->
+    <!--<property name="properties" ref="configProperties"/>-->
+    <!--</bean>-->
 
     <!-- 阿里 druid数据库连接池 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
@@ -71,9 +73,6 @@
             <tx:method name="*" propagation="REQUIRED" isolation="DEFAULT"/>
         </tx:attributes>
     </tx:advice>
-
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
-
     <!-- 事物处理 -->
     <aop:config>
         <!--目录结构，该目录下类注解：@BLTService("xxxService")-->
@@ -88,6 +87,23 @@
         <property name="configLocation" value="classpath:mybatisConfig.xml"></property>
         <!-- mapper扫描 -->
         <property name="mapperLocations" value="classpath:mybatis/*.xml"></property>
+        <!-- 配置分页插件 -->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageHelper">
+                    <!-- 这里的几个配置主要演示如何使用，如果不理解，一定要去掉下面的配置 -->
+                    <property name="properties">
+                        <value>
+                            dialect=mysql
+                            reasonable=true
+                            supportMethodsArguments=true
+                            params=count=countSql
+                            autoRuntimeDialect=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
     </bean>
 
     <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
@@ -96,23 +112,62 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
-    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="close" scope="prototype">
         <constructor-arg ref="sqlSessionFactory"/>
     </bean>
 
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="properties" ref="configProperties"/>
+    </bean>
+    <!-- 开发环境配置文件 -->
+    <beans profile="development">
+        <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+            <property name="locations">
+                <list>
+                    <value>classpath:setup.development.properties</value>
+                    <value>classpath:common.properties</value>
+                </list>
+            </property>
+            <property name="fileEncoding" value="UTF-8"/>
+        </bean>
+    </beans>
+    <!-- 测试环境配置文件 -->
+    <beans profile="demo">
+        <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+            <property name="locations">
+                <list>
+                    <value>classpath:setup.demo.properties</value>
+                    <value>classpath:common.properties</value>
+                </list>
+            </property>
+            <property name="fileEncoding" value="UTF-8"/>
+        </bean>
+    </beans>
+    <!-- 生产环境配置文件 -->
+    <beans profile="production">
+        <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+            <property name="locations">
+                <list>
+                    <value>classpath:setup.production.properties</value>
+                    <value>classpath:common.properties</value>
+                </list>
+            </property>
+            <property name="fileEncoding" value="UTF-8"/>
+        </bean>
+    </beans>
     <!-- 连接配置 -->
-    <rabbit:connection-factory id="myConnectionFactory" host="${rabbitmq.host}" port="${rabbitmq.port}"/>
-    <rabbit:admin id="mqAdmin" connection-factory="myConnectionFactory"/>
-    <rabbit:template id="amqpTemplate" connection-factory="myConnectionFactory" exchange="direct_exchange"/>
-    <rabbit:direct-exchange name="direct_exchange" durable="true" auto-delete="false" declared-by="mqAdmin">
-        <rabbit:bindings>
-            <rabbit:binding queue="blt_queue" key="${rabbitmq.key}"></rabbit:binding>
-            <rabbit:binding queue="blt_queue1" key="${rabbitmq.key1}"></rabbit:binding>
-        </rabbit:bindings>
-    </rabbit:direct-exchange>
-    <!-- durable 是否持久化 exclusive 仅创建者可以使用的私有队列，断开后自动删除，auto-delete当所有消费端连接断开后，是否自动删除队列 -->
-    <rabbit:queue id="blt_queue" name="${rabbitmq.queue}" durable="true" auto-delete="false" exclusive="false"/>
-    <rabbit:queue id="blt_queue1" name="${rabbitmq.queue1}" durable="true" auto-delete="false" exclusive="false"/>
+    <!--<rabbit:connection-factory id="myConnectionFactory" host="${rabbitmq.host}" port="${rabbitmq.port}" username="guest" password="guest"/>-->
+    <!--<rabbit:admin id="mqAdmin" connection-factory="myConnectionFactory"/>-->
+    <!--<rabbit:template id="amqpTemplate" connection-factory="myConnectionFactory" exchange="direct_exchange"/>-->
+    <!--<rabbit:direct-exchange name="direct_exchange" durable="true" auto-delete="false" declared-by="mqAdmin">-->
+    <!--<rabbit:bindings>-->
+    <!--<rabbit:binding queue="blt_queue" key="${rabbitmq.key}"></rabbit:binding>-->
+    <!--<rabbit:binding queue="blt_queue1" key="${rabbitmq.key1}"></rabbit:binding>-->
+    <!--</rabbit:bindings>-->
+    <!--</rabbit:direct-exchange>-->
+    <!--&lt;!&ndash; durable 是否持久化 exclusive 仅创建者可以使用的私有队列，断开后自动删除，auto-delete当所有消费端连接断开后，是否自动删除队列 &ndash;&gt;-->
+    <!--<rabbit:queue id="blt_queue" name="${rabbitmq.queue}" durable="true" auto-delete="false" exclusive="false"/>-->
+    <!--<rabbit:queue id="blt_queue1" name="${rabbitmq.queue1}" durable="true" auto-delete="false" exclusive="false"/>-->
     <!-- 交换机定义 -->
     <!--
         交换机：一个交换机可以绑定多个队列，一个队列也可以绑定到多个交换机上。

@@ -26,7 +26,9 @@
     <mapping path="**/loginOut" exclue="true"/>
     <mapping path="**/toChat" exclue="true"/>
     <mapping path="**/nav.jsp" exclue="true"/>
-    <mapping path="**/index.jsp" exclue="true"/>
+    <mapping path="**/index" exclue="true"/>
+    <mapping path="**/cms/**" exclue="true"/>
+    <mapping path="**/user/**" exclue="true"/>
 
     <!-- 自定义标签 -->
     <!--<content-processor>-->

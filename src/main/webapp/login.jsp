@@ -6,7 +6,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,height=device-height,user-scalable=0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1,height=device-height,sysUser-scalable=0"/>
     <link rel="stylesheet" href="${ctx}/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="${ctx}/static/css/login.css">
 </head>
@@ -24,7 +24,7 @@
                 <td colspan="2">
                     <div class="input-group">
                         <span class="input-group-addon">用户名：</span>
-                        <input type="text" name="userName" id="userName" placeholder="userName" class="form-control">
+                        <input type="text" name="username" id="userName" placeholder="userName" class="form-control">
                     </div>
                 </td>
             </tr>
@@ -35,6 +35,11 @@
                         <input type="password" name="password" id="password" placeholder="password"
                                class="form-control">
                     </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="checkbox" name="rememberMe" checked="checked"/>&nbsp;记住密码
                 </td>
             </tr>
             <!--<tr>

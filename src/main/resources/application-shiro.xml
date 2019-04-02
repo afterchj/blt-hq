@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+    <!-- 自定义Realm -->
+    <bean id="myRealm" class="com.tpadsz.after.realm.ShiroDbRealm">
+        <!--配置权限缓存-->
+        <property name="authorizationCachingEnabled" value="false"/>
+        <!-- 如果不加入密码匹配的操作，密码就不会存在 -->
+        <!-- 加入了密码匹配器之后，就会默认将前台传递过来的密码自动MD5加密 -->
+        <!--<property name="credentialsMatcher">-->
+            <!--<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">-->
+                <!-- 加密的方式 -->
+                <!--<constructor-arg index="0" type="java.lang.String" value="MD5"/>-->
+                <!-- 加密的次数，默认是1次 -->
+                <!--<property name="hashIterations" value="2"/>-->
+            <!--</bean>-->
+        <!--</property>-->
+    </bean>
+
+    <!-- 给予shior的内存缓存系统 -->
+    <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
+
+    <!-- 安全管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="myRealm"/>
+        <!-- 缓存管理器 -->
+        <property name="cacheManager" ref="cacheManager"/>
+        <!--记住密码 remenberMe配置 -->
+        <property name="rememberMeManager" ref="rememberMeManager"/>
+    </bean>
+
+    <!-- remenberMe配置 -->
+    <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg value="rememberMe"/>
+        <property name="httpOnly" value="true"/>
+        <!-- 默认记住7天（单位：秒） -->
+        <property name="maxAge" value="604800"/>
+    </bean>
+    <!-- rememberMe管理器 -->
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cipherKey" value="#{T(org.apache.shiro.codec.Base64).decode('4AvVhmFLUs0KTA3Kprsdag==')}"/>
+        <property name="cookie" ref="rememberMeCookie"/>
+    </bean>
+
+    <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <!-- Shiro过滤器 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!-- Shiro的核心安全接口,这个属性是必须的 -->
+        <property name="securityManager" ref="securityManager"/>
+        <!-- 权限认证失败，则跳转到指定页面 -->
+        <!-- <property name="unauthorizedUrl" value="/user/login?msg=unlogin or
+            unauthorized" /> -->
+        <!-- Shiro连接约束配置,即过滤链的定义 -->
+        <property name="filterChainDefinitions">
+            <value>
+                <!-- 静态文件 -->
+                /style/** = anon
+                /static/** = anon
+                /rest/** = anon
+                /user/register = anon
+                /cms/** = authc,roles[admin]
+                /user/** = authc
+                /** = anon
+            </value>
+        </property>
+    </bean>
+</beans>

@@ -1,6 +1,5 @@
 package com.tpadsz.after.utils;
 
-import com.tpadsz.after.rabbit.MessageProducer;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.context.ApplicationContext;
@@ -21,11 +20,11 @@ public class SpringUtils {
         return (SqlSessionTemplate) ctx.getBean("sqlSessionTemplate");
     }
 
-    public static AmqpTemplate getAmqpTemplate() {
-        return (AmqpTemplate) ctx.getBean("amqpTemplate");
-    }
+//    public static AmqpTemplate getAmqpTemplate() {
+//        return (AmqpTemplate) ctx.getBean("amqpTemplate");
+//    }
 
-    public static MessageProducer getProducer() {
-        return ctx.getBean(MessageProducer.class);
-    }
+//    public static MessageProducer getProducer() {
+//        return ctx.getBean(MessageProducer.class);
+//    }
 }

@@ -1,13 +1,29 @@
 package com.tpadsz.after.dao;
 
+
 import com.tpadsz.after.entity.User;
 
 import java.util.List;
 
-/**
- * Created by after on 2018/8/5.
- */
 public interface UserDao {
 
-    List<User> getAll();
+	void deleteById(Integer id);
+	
+	int insert(User record);
+	
+	int insertSelective(User record);
+	
+	List<User> selectAll();
+	
+	User selectById(Integer id);
+	
+	User selectByUsername(String username);
+	
+	int updateByIdSelective(User record);
+	
+	int updateById(User record);
+
+	void blockUserById(Integer id);
+
+	void unblockUserById(Integer id);
 }

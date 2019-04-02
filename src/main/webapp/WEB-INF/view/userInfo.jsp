@@ -50,11 +50,11 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="user" items="${users}">
+                            <c:forEach var="sysUser" items="${users}">
                                 <tr>
-                                    <td>${user.userName}</td>
-                                    <td>${user.company}</td>
-                                    <td>${user.telephone}</td>
+                                    <td>${sysUser.userName}</td>
+                                    <td>${sysUser.company}</td>
+                                    <td>${sysUser.telephone}</td>
                                 </tr>
                             </c:forEach>
                             </tbody>
