@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
     <!-- 自定义Realm -->
-    <bean id="myRealm" class="com.tpadsz.after.realm.MyRealm">
+    <bean id="myRealm" class="com.tpadsz.after.realm.ShiroDbRealm">
         <!--配置权限缓存-->
         <property name="authorizationCachingEnabled" value="false"/>
         <!-- 如果不加入密码匹配的操作，密码就不会存在 -->

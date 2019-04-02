@@ -42,8 +42,7 @@
     </delete>
 
     <insert id="insert" parameterType="User">
-        <selectKey resultType="java.lang.Integer" keyProperty="id"
-                   order="AFTER">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into user
@@ -53,6 +52,9 @@
             </if>
             <if test="password != null">
                 password,
+            </if>
+            <if test="salt != null">
+                salt,
             </if>
             <if test="email != null">
                 email,
@@ -74,6 +76,7 @@
         (
         #{username,jdbcType=VARCHAR},
         #{password,jdbcType=VARCHAR},
+        #{salt,jdbcType=VARCHAR},
         #{email,jdbcType=VARCHAR},
         #{birth,jdbcType=DATE},
         #{gender,jdbcType=VARCHAR},
@@ -83,8 +86,7 @@
     </insert>
 
     <insert id="insertSelective" parameterType="User">
-        <selectKey resultType="java.lang.Integer" keyProperty="id"
-                   order="AFTER">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into user

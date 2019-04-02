@@ -78,8 +78,7 @@
                         <%--</c:if>--%>
                         <li><a href="#">关于 </a></li>
                         <c:if test="${loginUser == null }">
-                            <li><a data-toggle="modal" data-target="#loginModal" href=""><span
-                                    class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+                            <li><a data-toggle="modal" data-target="#loginModal" href=""><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
                             <li><a href="user/register"><span class="glyphicon glyphicon-user"></span> 注册 </a></li>
                         </c:if>
 
@@ -147,8 +146,7 @@
                 <h1 class="text-center text-primary">欢迎登录</h1>
             </div>
             <div class="modal-body">
-                <form id="login1" action="login" method="post"
-                      class="form col-md-12 center-block">
+                <form id="login1" action="login" method="post" class="form col-md-12 center-block">
                     <div class="form-group">
                         <input id="username" name="username" type="text"
                                class="form-control input-lg" placeholder="用户名">
@@ -161,14 +159,10 @@
                         <div id="loginInfo"></div>
                     </div>
                     <div class="form-group">
-                        <button id="submit1" class="btn btn-primary btn-lg btn-block"
-                                type="button" onclick="validatePassword()">立刻登录
-                        </button>
+                        <input id="submit1" class="btn btn-primary btn-lg btn-block" type="submit" value="立刻登录" onclick="validatePassword()">
                     </div>
                 </form>
             </div>
-
-
             <div class="modal-footer"></div>
         </div>
     </div>
@@ -191,25 +185,24 @@
             return;
         }
         /* ajax验证密码 */
-        $.ajax({
-            type: "GET",
-            url: "validatePassword",
-            data: {
-                "username": username
-            },
-            async: true,
-            success: function (data) {
-                /* alert(password==data); */
-                if (password == data) {
-                    $("#login1").submit();
-                } else {
-                    $("#loginInfo")
-                        .html(
-                            "<b style='color:red;font-size:15px;'>用户名或密码错误！</b>");
-                }
-                /* alert(data); */
-            }
-        })
+//        $.ajax({
+//            type: "GET",
+//            url: "validatePassword",
+//            data: {
+//                "username": username
+//            },
+//            async: true,
+//            success: function (data) {
+//                /* alert(password==data); */
+//                if (password == data) {
+//                    $("#login1").submit();
+//                } else {
+//                    $("#loginInfo")
+//                        .html("<b style='color:red;font-size:15px;'>用户名或密码错误！</b>");
+//                }
+//                /* alert(data); */
+//            }
+//        })
     }
     /* Enter提交 */
     $(document).ready(function () {
@@ -224,8 +217,7 @@
     });
 
     /* 天气预报 */
-    $
-        .getScript(
+    $.getScript(
             'http://php.weather.sina.com.cn/iframe/index/w_cl.php?code=js&day=0&city=&dfc=1&charset=utf-8',
             function (a) {
                 var s = "", r = "", q = "";

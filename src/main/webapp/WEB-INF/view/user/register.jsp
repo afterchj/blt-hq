@@ -189,17 +189,15 @@
             <div class="col-sm-6">
                 <div class="row">
                     <div class="col-sm-6">
-                        <label class="radio-inline"> <input name="gender"
-                                                            class="gender" type="radio" id="femaleRadio" value="女"
-                                                            checked=true>女
+                        <label class="radio-inline">
+                            <input name="gender" class="gender" type="radio" id="femaleRadio" value="女" checked=true>女
                         </label>
                     </div>
                     <div class="col-sm-6">
-                        <label class="radio-inline"> <input name="gender"
-                                                            class="gender" type="radio" id="maleRadio" value="男">男
+                        <label class="radio-inline">
+                            <input name="gender" class="gender" type="radio" id="maleRadio" value="男">男
                         </label>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -211,9 +209,7 @@
         <!-- /.form-group -->
         <div class="form-group">
             <div class="col-sm-8 col-sm-offset-3">
-                <button type="button" id="submit1"
-                        class="btn btn-primary btn-block" onclick="validate()">立即注册
-                </button>
+                <button type="button" id="submit1" class="btn btn-primary btn-block" onclick="validate()">立即注册</button>
             </div>
         </div>
     </form>

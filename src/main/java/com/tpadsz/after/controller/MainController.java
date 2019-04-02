@@ -6,6 +6,7 @@ import com.tpadsz.after.entity.Blog;
 import com.tpadsz.after.entity.User;
 import com.tpadsz.after.entity.UserRole;
 import com.tpadsz.after.entity.UserRoleTemp;
+import com.tpadsz.after.realm.ShiroDbRealm;
 import com.tpadsz.after.service.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -70,7 +71,12 @@ public class MainController {
     public ModelAndView save(User user) {
         ModelAndView mv = new ModelAndView();
         try {
+            System.out.println("plainText=" + user.getPassword());
+            ShiroDbRealm.HashPassword hashPassword = new ShiroDbRealm().encrypt(user.getPassword());
+            System.out.println(hashPassword.password + "\t" + hashPassword.salt);
             user.setStatus("1");
+            user.setPassword(hashPassword.password);
+            user.setSalt(hashPassword.salt);
             user.setRegTime(new Date());
             userService.save(user);
             Integer id = user.getId();
@@ -118,12 +124,11 @@ public class MainController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(User user, HttpSession session) {
-        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword(),user.getRememberMe());
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword(), user.getRememberMe());
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
         User loginUser = userService.selectByUsername(user.getUsername());
         session.setAttribute("loginUser", loginUser);
-        System.out.println("pwd=" + loginUser.getPassword());
         return "/loginSuccess";
     }
 
@@ -215,6 +220,7 @@ public class MainController {
         }
         return userRoleList;
     }
+
     /**
      * 跳转角色管理页面
      *
@@ -245,6 +251,7 @@ public class MainController {
         userRoleService.deleteById(id);
         return "redirect:/cms/userManage";
     }
+
     /**
      * 修改角色roles，并保存
      *
@@ -278,6 +285,7 @@ public class MainController {
         u.setUsername(user.getUsername());
         return u;
     }
+
     /**
      * 禁用用户
      */
@@ -326,7 +334,7 @@ public class MainController {
             blog.setUserId(loginUser.getId());
             blog.setAuthor(loginUser.getUsername());
             blogService.insert(blog);
-            mv.setViewName("redirect:/user/blog_list?userId="+loginUser.getId());
+            mv.setViewName("redirect:/user/blog_list?userId=" + loginUser.getId());
         } catch (Exception e) {
             mv.setViewName("error/error");
             e.printStackTrace();
