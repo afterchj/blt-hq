@@ -24,7 +24,7 @@
                 <td colspan="2">
                     <div class="input-group">
                         <span class="input-group-addon">用户名：</span>
-                        <input type="text" name="username" id="userName" placeholder="userName" class="form-control">
+                        <input type="text" name="uname" id="userName" placeholder="userName" class="form-control">
                     </div>
                 </td>
             </tr>
@@ -32,7 +32,7 @@
                 <td colspan="2">
                     <div class="input-group">
                         <span class="input-group-addon">密码：</span>
-                        <input type="password" name="password" id="password" placeholder="password"
+                        <input type="password" name="pwd" id="password" placeholder="password"
                                class="form-control">
                     </div>
                 </td>

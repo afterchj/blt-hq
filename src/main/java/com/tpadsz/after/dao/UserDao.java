@@ -15,7 +15,7 @@ public interface UserDao {
 	
 	List<User> selectAll();
 	
-	User selectById(Integer id);
+	User selectById(String id);
 	
 	User selectByUsername(String username);
 	

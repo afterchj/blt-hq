@@ -51,12 +51,10 @@ public class ShiroDbRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String username = (String) token.getPrincipal();
         User user = userExtendDao.selectByUsername(username);
-        logger.info("user:" + user.toString());
         if (null != user) {
-//            AuthenticationInfo info = new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
             byte[] salt = Encodes.decodeHex(user.getSalt());
-            logger.info("ByteSource:" + salt.toString());
-            return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), ByteSource.Util.bytes(salt), getName());
+            AuthenticationInfo info = new SimpleAuthenticationInfo(user.getUname(), user.getPwd(), ByteSource.Util.bytes(salt), getName());
+            return info;
 //            return info;
         }
         return null;

@@ -1,5 +1,6 @@
 package com.tpadsz.after.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tpadsz.after.entity.Blog;
@@ -8,6 +9,7 @@ import com.tpadsz.after.entity.UserRole;
 import com.tpadsz.after.entity.UserRoleTemp;
 import com.tpadsz.after.realm.ShiroDbRealm;
 import com.tpadsz.after.service.*;
+import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -50,6 +52,7 @@ public class MainController {
     @Autowired
     private RoleService roleService;
 
+    private Logger logger = Logger.getLogger(this.getClass());
 
     /**
      * 跳转首页
@@ -71,15 +74,15 @@ public class MainController {
     public ModelAndView save(User user) {
         ModelAndView mv = new ModelAndView();
         try {
-            System.out.println("plainText=" + user.getPassword());
-            ShiroDbRealm.HashPassword hashPassword = new ShiroDbRealm().encrypt(user.getPassword());
+            System.out.println("plainText=" + user.getPwd());
+            ShiroDbRealm.HashPassword hashPassword = new ShiroDbRealm().encrypt(user.getPwd());
             System.out.println(hashPassword.password + "\t" + hashPassword.salt);
             user.setStatus("1");
-            user.setPassword(hashPassword.password);
+            user.setPwd(hashPassword.password);
             user.setSalt(hashPassword.salt);
-            user.setRegTime(new Date());
+            user.setCreateDate(new Date());
             userService.save(user);
-            Integer id = user.getId();
+            String id = user.getId();
             System.out.println(id);
             /* UserRole userRole = userRoleService.selectByUserId(id); */
             UserRole userRole = new UserRole();
@@ -124,10 +127,12 @@ public class MainController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(User user, HttpSession session) {
-        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword(), user.getRememberMe());
+        logger.info("username=" + user.getUname() + ",pwd=" + user.getPwd());
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUname(), user.getPwd(), user.getRememberMe());
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
-        User loginUser = userService.selectByUsername(user.getUsername());
+        User loginUser = userService.selectByUsername(user.getUname());
+        logger.info("user:" + JSON.toJSONString(loginUser));
         session.setAttribute("loginUser", loginUser);
         return "/loginSuccess";
     }
@@ -168,7 +173,7 @@ public class MainController {
     @RequestMapping(value = "/validatePassword")
     public String validateUser(String username) {
         User _user = userService.selectByUsername(username);
-        String _password = _user.getPassword();
+        String _password = _user.getPwd();
         if (_password == null) {
             return "";
         } else {
@@ -210,11 +215,10 @@ public class MainController {
         List<User> userList = userService.selectAll();
         List<UserRoleTemp> userRoleList = new ArrayList<UserRoleTemp>();
         for (User user : userList) {
-            List<String> roleList = userExtendService.getRoles(user
-                    .getUsername());
+            List<String> roleList = userExtendService.getRoles(user.getUname());
             UserRoleTemp u = new UserRoleTemp();
             u.setId(user.getId());
-            u.setUsername(user.getUsername());
+            u.setUsername(user.getUname());
             u.setRoles(roleList);
             userRoleList.add(u);
         }
@@ -261,12 +265,12 @@ public class MainController {
     @ResponseBody
     @RequestMapping(value = "/updateRoles", method = RequestMethod.GET)
     public UserRoleTemp updateRoles(
-            @RequestParam(value = "userId") Integer userId,
+            @RequestParam(value = "userId") String userId,
             @RequestParam(value = "roleStr") String roleStr) {
         UserRoleTemp u = new UserRoleTemp();
         System.out.println(roleStr);
         // 根据用户userId删除所有RoleId
-        userRoleService.deleteById(userId);
+        userRoleService.deleteById(Integer.valueOf(userId));
         // 遍历角色名
         String[] roleNames = roleStr.split(",");
         for (int i = 0; i < roleNames.length; i++) {
@@ -279,10 +283,10 @@ public class MainController {
         }
 
         User user = userService.selectById(userId);
-        List<String> roles = userExtendService.getRoles(user.getUsername());
+        List<String> roles = userExtendService.getRoles(user.getUname());
         u.setId(userId);
         u.setRoles(roles);
-        u.setUsername(user.getUsername());
+        u.setUsername(user.getUname());
         return u;
     }
 
@@ -324,23 +328,23 @@ public class MainController {
         return "/searchPage";
     }
 
-    // 提交博客
-    @RequestMapping(value = "/user/submitBlog", method = RequestMethod.POST)
-    public ModelAndView submitBlog(Blog blog, HttpSession session) {
-        ModelAndView mv = new ModelAndView();
-        try {
-            blog.setCreateTime(new Date());
-            User loginUser = (User) session.getAttribute("loginUser");
-            blog.setUserId(loginUser.getId());
-            blog.setAuthor(loginUser.getUsername());
-            blogService.insert(blog);
-            mv.setViewName("redirect:/user/blog_list?userId=" + loginUser.getId());
-        } catch (Exception e) {
-            mv.setViewName("error/error");
-            e.printStackTrace();
-        }
-        return mv;
-    }
+//    // 提交博客
+//    @RequestMapping(value = "/user/submitBlog", method = RequestMethod.POST)
+//    public ModelAndView submitBlog(Blog blog, HttpSession session) {
+//        ModelAndView mv = new ModelAndView();
+//        try {
+//            blog.setCreateTime(new Date());
+//            User loginUser = (User) session.getAttribute("loginUser");
+//            blog.setUserId(loginUser.getId());
+//            blog.setAuthor(loginUser.getUname());
+//            blogService.insert(blog);
+//            mv.setViewName("redirect:/user/blog_list?userId=" + loginUser.getId());
+//        } catch (Exception e) {
+//            mv.setViewName("error/error");
+//            e.printStackTrace();
+//        }
+//        return mv;
+//    }
 
     /**
      * 博客

@@ -153,8 +153,8 @@ INSERT INTO `log` VALUES ('58', 'admin', '127.0.0.1', '2018-09-12 16:26:33', 'lo
 -- ----------------------------
 -- Table structure for `permission`
 -- ----------------------------
-DROP TABLE IF EXISTS `permission`;
-CREATE TABLE `permission` (
+DROP TABLE IF EXISTS `f_permission`;
+CREATE TABLE `f_permission` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
   `permission_name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -163,18 +163,20 @@ CREATE TABLE `permission` (
 -- ----------------------------
 -- Records of permission
 -- ----------------------------
-INSERT INTO `permission` VALUES ('1', 'delete');
-INSERT INTO `permission` VALUES ('2', 'edit');
-INSERT INTO `permission` VALUES ('3', 'list');
-INSERT INTO `permission` VALUES ('4', 'UI1');
-INSERT INTO `permission` VALUES ('5', 'UI2');
+INSERT INTO `f_permission` VALUES ('1', 'delete');
+INSERT INTO `f_permission` VALUES ('2', 'edit');
+INSERT INTO `f_permission` VALUES ('3', 'list');
+INSERT INTO `f_permission` VALUES ('3', 'create');
+INSERT INTO `f_permission` VALUES ('4', 'UI1');
+INSERT INTO `f_permission` VALUES ('5', 'UI2');
 
 -- ----------------------------
 -- Table structure for `role`
 -- ----------------------------
-DROP TABLE IF EXISTS `role`;
-CREATE TABLE `role` (
+DROP TABLE IF EXISTS `f_role`;
+CREATE TABLE `f_role` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
+  `role_type` varchar(20) DEFAULT NULL,
   `role_name` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
@@ -182,21 +184,15 @@ CREATE TABLE `role` (
 -- ----------------------------
 -- Records of role
 -- ----------------------------
-INSERT INTO `role` VALUES ('1', 'admin');
-INSERT INTO `role` VALUES ('2', 'manager');
-INSERT INTO `role` VALUES ('3', 'user');
-INSERT INTO `role` VALUES ('4', 'IOS_dev');
-INSERT INTO `role` VALUES ('5', 'JAVA_dev');
-INSERT INTO `role` VALUES ('6', 'PHP_dev');
-INSERT INTO `role` VALUES ('7', 'UI_dev');
-INSERT INTO `role` VALUES ('8', 'C++_dev');
-INSERT INTO `role` VALUES ('9', 'C_dev');
+INSERT INTO `f_role` VALUES ('1', 'admin','管理员');
+INSERT INTO `f_role` VALUES ('2', 'manager','乙方管理员');
+INSERT INTO `f_role` VALUES ('3', 'user','施工人员');
 
 -- ----------------------------
 -- Table structure for `role_permission`
 -- ----------------------------
-DROP TABLE IF EXISTS `role_permission`;
-CREATE TABLE `role_permission` (
+DROP TABLE IF EXISTS `f_role_permission`;
+CREATE TABLE `f_role_permission` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
   `role_id` int(20) DEFAULT NULL,
   `permission_id` int(20) DEFAULT NULL,
@@ -212,74 +208,16 @@ INSERT INTO `role_permission` VALUES ('3', '1', '3');
 INSERT INTO `role_permission` VALUES ('4', '2', '2');
 INSERT INTO `role_permission` VALUES ('5', '2', '3');
 INSERT INTO `role_permission` VALUES ('6', '3', '3');
-INSERT INTO `role_permission` VALUES ('7', '4', '4');
-INSERT INTO `role_permission` VALUES ('8', '4', '4');
 
--- ----------------------------
--- Table structure for `user`
--- ----------------------------
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
-  `id` int(20) NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) NOT NULL,
-  `password` varchar(16) NOT NULL,
-  `birth` date DEFAULT NULL,
-  `gender` varchar(10) DEFAULT NULL,
-  `email` varchar(40) DEFAULT NULL,
-  `status` varchar(10) DEFAULT NULL,
-  `regTime` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of user
--- ----------------------------
-INSERT INTO `user` VALUES ('1', 'admin', '123', '2016-12-26', 'male', '34343@qw.com', '1', '2017-03-18 12:53:39');
-INSERT INTO `user` VALUES ('2', '张三', '123', '2017-03-21', 'male', '2132@123', '1', '2014-03-18 22:53:39');
-INSERT INTO `user` VALUES ('3', '李四', '123', '2017-03-06', 'male', 'trytyt@wqew', '1', '2011-03-18 22:53:39');
-INSERT INTO `user` VALUES ('4', '王五', '123', '2018-03-08', 'Female', '1232132@123.com', '1', '2018-03-18 22:53:39');
-INSERT INTO `user` VALUES ('5', '李白', '123', '2018-03-23', 'Female', '232434@123.com', '1', '2018-03-18 22:53:39');
-INSERT INTO `user` VALUES ('6', 'Andrew', '123', '2017-03-21', 'male', '2132@123', '1', '2014-03-18 22:53:39');
-INSERT INTO `user` VALUES ('7', 'Lili', '123', '2017-03-06', 'male', 'trytyt@wqew', '0', '2011-03-18 22:53:39');
-INSERT INTO `user` VALUES ('8', 'jack', '123', '2018-03-08', 'Female', '1232132@123.com', '0', '2018-03-18 22:53:39');
-INSERT INTO `user` VALUES ('9', 'lucy', '123', '2018-03-23', 'Female', '232434@123.com', '0', '2018-03-18 22:53:39');
-INSERT INTO `user` VALUES ('10', 'Mike', '123', '2017-03-21', 'male', '2132@123', '0', '2014-03-18 22:53:39');
-INSERT INTO `user` VALUES ('11', 'Man', '123', '2017-03-06', 'male', 'trytyt@wqew', '1', '2011-03-18 22:53:39');
-INSERT INTO `user` VALUES ('12', 'Chilton', '123', '2018-03-08', 'Female', '1232132@123.com', '0', '2018-03-18 22:53:39');
-INSERT INTO `user` VALUES ('13', 'Micheal', '123', '2018-03-23', 'Female', '232434@123.com', '0', '2018-03-18 22:53:39');
-INSERT INTO `user` VALUES ('15', 'tom', '123adqwe', '2018-09-05', '女', '18986940541@163.com', '1', '2018-09-06 12:41:09');
-INSERT INTO `user` VALUES ('16', 'adminwqewe', '123', '2018-09-07', '女', 'qweqe@123.com', '1', '2018-09-06 15:50:12');
 
 -- ----------------------------
 -- Table structure for `user_role`
 -- ----------------------------
-DROP TABLE IF EXISTS `user_role`;
-CREATE TABLE `user_role` (
+DROP TABLE IF EXISTS `f_user_role`;
+CREATE TABLE `f_user_role` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
   `user_id` int(20) DEFAULT NULL,
   `role_id` int(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=246 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of user_role
--- ----------------------------
-INSERT INTO `user_role` VALUES ('198', '1', '1');
-INSERT INTO `user_role` VALUES ('199', '1', '2');
-INSERT INTO `user_role` VALUES ('200', '1', '3');
-INSERT INTO `user_role` VALUES ('223', '3', '4');
-INSERT INTO `user_role` VALUES ('224', '3', '3');
-INSERT INTO `user_role` VALUES ('225', '3', '6');
-INSERT INTO `user_role` VALUES ('226', '3', '7');
-INSERT INTO `user_role` VALUES ('227', '3', '8');
-INSERT INTO `user_role` VALUES ('228', '3', '9');
-INSERT INTO `user_role` VALUES ('237', '2', '2');
-INSERT INTO `user_role` VALUES ('238', '2', '3');
-INSERT INTO `user_role` VALUES ('239', '2', '4');
-INSERT INTO `user_role` VALUES ('240', '2', '5');
-INSERT INTO `user_role` VALUES ('241', '4', '3');
-INSERT INTO `user_role` VALUES ('242', '5', '3');
-INSERT INTO `user_role` VALUES ('243', '6', '3');
-INSERT INTO `user_role` VALUES ('244', '15', '3');
-INSERT INTO `user_role` VALUES ('245', '16', '3');

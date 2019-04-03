@@ -1,57 +1,63 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.tpadsz.after.dao.UserDao">
+
     <resultMap type="User" id="BaseResultMap">
-        <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="username" property="username" jdbcType="VARCHAR"/>
-        <result column="password" property="password" jdbcType="VARCHAR"/>
-        <result column="birth" property="birth" jdbcType="DATE"/>
-        <result column="status" property="status" jdbcType="VARCHAR"/>
-        <result column="gender" property="gender" jdbcType="VARCHAR"/>
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="uname" property="uname" jdbcType="VARCHAR"/>
+        <result column="account" property="account" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
         <result column="email" property="email" jdbcType="VARCHAR"/>
-        <result column="regTime" property="regTime" jdbcType="TIMESTAMP"/>
+        <result column="pwd" property="pwd" jdbcType="VARCHAR"/>
+        <result column="salt" property="salt" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="DATE"/>
+        <result column="status" property="status" jdbcType="BIT"/>
+        <result column="is_locked" property="isLocked" jdbcType="BIT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-		id, username, password, birth,gender,email,status,regTime
+		id,uname,account,pwd,salt,mobile,create_date,email,create_date,is_locked,status
 	</sql>
 
-    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="selectById" resultMap="BaseResultMap" parameterType="string">
         select
         <include refid="Base_Column_List"/>
-        from user
+        from f_user_account
         where id = #{id,jdbcType=INTEGER}
     </select>
 
     <select id="selectAll" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from user
+        from f_user_account
     </select>
 
     <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
-        from user
-        where username = #{username,jdbcType=VARCHAR}
+        from f_user_account
+        where uname = #{uname}
+        or account = #{uname}
+        or mobile = #{uname}
+        or email = #{uname}
     </select>
 
-    <delete id="deleteById" parameterType="java.lang.Integer">
+    <delete id="deleteById" parameterType="string">
         <!-- DELETE user,user_role FROM user LEFT JOIN user_role ON user.id = user_role.user_id WHERE user.id= #{id,jdbcType = INTEGER} -->
-        DELETE from user where id = #{id,jdbcType = INTEGER}
+        DELETE from f_user_account where id = #{id}
     </delete>
 
     <insert id="insert" parameterType="User">
         <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into user
+        insert into f_user_account
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="username != null">
-                username,
+            <if test="uname != null">
+                uname,
             </if>
-            <if test="password != null">
-                password,
+            <if test="pwd != null">
+                pwd,
             </if>
             <if test="salt != null">
                 salt,
@@ -59,29 +65,29 @@
             <if test="email != null">
                 email,
             </if>
-            <if test="birth != null">
-                birth,
+            <if test="createDate != null">
+                create_date,
             </if>
-            <if test="gender != null">
-                gender,
+            <if test="mobile != null">
+                mobile,
             </if>
             <if test="status != null">
                 status,
             </if>
-            <if test="regTime != null">
-                regTime
+            <if test="updateDate != null">
+                update_date
             </if>
         </trim>
         values
         (
-        #{username,jdbcType=VARCHAR},
-        #{password,jdbcType=VARCHAR},
+        #{uanme,jdbcType=VARCHAR},
+        #{pwd,jdbcType=VARCHAR},
         #{salt,jdbcType=VARCHAR},
         #{email,jdbcType=VARCHAR},
-        #{birth,jdbcType=DATE},
-        #{gender,jdbcType=VARCHAR},
+        now(),
+        #{mobile,jdbcType=VARCHAR},
         #{status,jdbcType=VARCHAR},
-        #{regTime,jdbcType=TIMESTAMP}
+        now()
         )
     </insert>
 
@@ -89,7 +95,7 @@
         <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into user
+        insert into f_user_account
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="username != null">
                 username,
@@ -159,7 +165,7 @@
 	</update>
 
     <!--禁用用户-->
-    <update id = "blockUserById" parameterType="java.lang.Integer">
+    <update id="blockUserById" parameterType="java.lang.Integer">
         UPDATE USER
         SET status = '0'
         WHERE
@@ -167,7 +173,7 @@
     </update>
 
     <!--解禁用户-->
-    <update id = "unblockUserById" parameterType="java.lang.Integer">
+    <update id="unblockUserById" parameterType="java.lang.Integer">
         UPDATE USER
         SET status = '1'
         WHERE

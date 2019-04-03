@@ -18,20 +18,20 @@
     <!--<property name="location" value="classpath:jdbc.properties"/>-->
     <!--</bean>-->
 
-    <!-- 第三种方式：加载多个properties文件 -->
-    <!--<bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">-->
-    <!--<property name="locations">-->
-    <!--<list>-->
-    <!--<value>classpath:jdbc.properties</value>-->
-    <!--<value>classpath:common.properties</value>-->
-    <!--</list>-->
-    <!--</property>-->
-    <!--<property name="fileEncoding" value="UTF-8"/>-->
-    <!--</bean>-->
+    <!--第三种方式：加载多个properties文件-->
+    <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:setup.production.properties</value>
+                <value>classpath:common.properties</value>
+            </list>
+        </property>
+        <property name="fileEncoding" value="UTF-8"/>
+    </bean>
 
-    <!--<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">-->
-    <!--<property name="properties" ref="configProperties"/>-->
-    <!--</bean>-->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="properties" ref="configProperties"/>
+    </bean>
 
     <!-- 阿里 druid数据库连接池 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
@@ -112,49 +112,47 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
-    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="close" scope="prototype">
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="close"
+          scope="prototype">
         <constructor-arg ref="sqlSessionFactory"/>
     </bean>
 
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
-        <property name="properties" ref="configProperties"/>
-    </bean>
     <!-- 开发环境配置文件 -->
-    <beans profile="development">
-        <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-            <property name="locations">
-                <list>
-                    <value>classpath:setup.development.properties</value>
-                    <value>classpath:common.properties</value>
-                </list>
-            </property>
-            <property name="fileEncoding" value="UTF-8"/>
-        </bean>
-    </beans>
-    <!-- 测试环境配置文件 -->
-    <beans profile="demo">
-        <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-            <property name="locations">
-                <list>
-                    <value>classpath:setup.demo.properties</value>
-                    <value>classpath:common.properties</value>
-                </list>
-            </property>
-            <property name="fileEncoding" value="UTF-8"/>
-        </bean>
-    </beans>
-    <!-- 生产环境配置文件 -->
-    <beans profile="production">
-        <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-            <property name="locations">
-                <list>
-                    <value>classpath:setup.production.properties</value>
-                    <value>classpath:common.properties</value>
-                </list>
-            </property>
-            <property name="fileEncoding" value="UTF-8"/>
-        </bean>
-    </beans>
+    <!--<beans profile="development">-->
+        <!--<bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">-->
+            <!--<property name="locations">-->
+                <!--<list>-->
+                    <!--<value>classpath:setup.development.properties</value>-->
+                    <!--<value>classpath:common.properties</value>-->
+                <!--</list>-->
+            <!--</property>-->
+            <!--<property name="fileEncoding" value="UTF-8"/>-->
+        <!--</bean>-->
+    <!--</beans>-->
+    <!--&lt;!&ndash; 测试环境配置文件 &ndash;&gt;-->
+    <!--<beans profile="demo">-->
+        <!--<bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">-->
+            <!--<property name="locations">-->
+                <!--<list>-->
+                    <!--<value>classpath:setup.demo.properties</value>-->
+                    <!--<value>classpath:common.properties</value>-->
+                <!--</list>-->
+            <!--</property>-->
+            <!--<property name="fileEncoding" value="UTF-8"/>-->
+        <!--</bean>-->
+    <!--</beans>-->
+    <!--&lt;!&ndash; 生产环境配置文件 &ndash;&gt;-->
+    <!--<beans profile="production">-->
+        <!--<bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">-->
+            <!--<property name="locations">-->
+                <!--<list>-->
+                    <!--<value>classpath:setup.production.properties</value>-->
+                    <!--<value>classpath:common.properties</value>-->
+                <!--</list>-->
+            <!--</property>-->
+            <!--<property name="fileEncoding" value="UTF-8"/>-->
+        <!--</bean>-->
+    <!--</beans>-->
     <!-- 连接配置 -->
     <!--<rabbit:connection-factory id="myConnectionFactory" host="${rabbitmq.host}" port="${rabbitmq.port}" username="guest" password="guest"/>-->
     <!--<rabbit:admin id="mqAdmin" connection-factory="myConnectionFactory"/>-->

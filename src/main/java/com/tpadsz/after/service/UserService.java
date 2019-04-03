@@ -12,7 +12,7 @@ import java.util.List;
 public interface UserService {
 	List<User> selectAll();
 	
-	User selectById(Integer id);
+	User selectById(String id);
 	
 	User selectByUsername(String username);
 	

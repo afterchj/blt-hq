@@ -6,50 +6,31 @@ import java.util.Date;
 
 public class User {
 
-    private Integer id;
-
-    private String username;
-
-    private String password;
+    private String id;
+    private String uname;
+    private String account;
+    private String pwd;
     private String salt;
     private String mobile;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date birth;
-
     private String gender;
 
-    public Date getRegTime() {
-        return regTime;
-    }
-
-    public void setRegTime(Date regTime) {
-        this.regTime = regTime;
-    }
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH-mm-ss")
-    private Date regTime;
-
     private String email;
-
     //状态码 0:禁用,1:正常
     private String status;
-
     private String rememberMe;
-
-    private Date modifyTime;
-
+    private Date createDate;
+    private Date updateDate;
+    private boolean isLocked;
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", username='" + uname + '\'' +
+                ", password='" + pwd + '\'' +
                 ", salt='" + salt + '\'' +
                 ", mobile='" + mobile + '\'' +
-                ", birth=" + birth +
-                ", gender='" + gender + '\'' +
-                ", regTime=" + regTime +
+                ", account='" + account + '\'' +
                 ", email='" + email + '\'' +
                 ", status='" + status + '\'' +
                 '}';
@@ -63,36 +44,36 @@ public class User {
         this.status = status;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUname() {
+        return uname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUname(String uname) {
+        this.uname = uname;
     }
 
-    public String getPassword() {
-        return password;
+    public String getAccount() {
+        return account;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
-    public Date getBirth() {
-        return birth;
+    public String getPwd() {
+        return pwd;
     }
 
-    public void setBirth(Date birth) {
-        this.birth = birth;
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 
     public String getGender() {
@@ -127,12 +108,20 @@ public class User {
         this.mobile = mobile;
     }
 
-    public Date getModifyTime() {
-        return modifyTime;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 
     public String getRememberMe() {
@@ -141,5 +130,13 @@ public class User {
 
     public void setRememberMe(String rememberMe) {
         this.rememberMe = rememberMe;
+    }
+
+    public boolean isLocked() {
+        return isLocked;
+    }
+
+    public void setLocked(boolean locked) {
+        isLocked = locked;
     }
 }

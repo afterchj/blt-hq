@@ -63,22 +63,24 @@
                     <ul class="nav navbar-nav navbar-right">
                         <%--<c:if test="${loginUser != null }">--%>
                         <li class="dropdown"><a href="#" class="dropdown-toggle"
-                                                data-toggle="dropdown">[${loginUser.username }]<strong
+                                                data-toggle="dropdown">[${loginUser.uname }]<strong
                                 class="caret"></strong></a>
                             <ul class="dropdown-menu">
                                 <li><a href="user/logOut"
                                        class="glyphicon glyphicon-inbox"> 退出帐号</a></li>
                                 <shiro:hasRole name="admin">
-                                    <li><a
-                                            href="${pageContext.request.contextPath }/cms/index"
-                                            class="glyphicon glyphicon-th-large"> 后台管理</a></li>
+                                    <li>
+                                        <a href="${pageContext.request.contextPath }/cms/index"
+                                           class="glyphicon glyphicon-th-large"> 后台管理</a>
+                                    </li>
                                 </shiro:hasRole>
                             </ul>
                         </li>
                         <%--</c:if>--%>
                         <li><a href="#">关于 </a></li>
                         <c:if test="${loginUser == null }">
-                            <li><a data-toggle="modal" data-target="#loginModal" href=""><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+                            <li><a data-toggle="modal" data-target="#loginModal" href=""><span
+                                    class="glyphicon glyphicon-log-in"></span> 登录</a></li>
                             <li><a href="user/register"><span class="glyphicon glyphicon-user"></span> 注册 </a></li>
                         </c:if>
 
@@ -148,18 +150,19 @@
             <div class="modal-body">
                 <form id="login1" action="login" method="post" class="form col-md-12 center-block">
                     <div class="form-group">
-                        <input id="username" name="username" type="text"
+                        <input id="username" name="uname" type="text"
                                class="form-control input-lg" placeholder="用户名">
                     </div>
                     <div class="form-group">
-                        <input id="password" name="password" type="password"
+                        <input id="password" name="pwd" type="password"
                                class="form-control input-lg" placeholder="登录密码">
                     </div>
                     <div class="form-group">
                         <div id="loginInfo"></div>
                     </div>
                     <div class="form-group">
-                        <input id="submit1" class="btn btn-primary btn-lg btn-block" type="submit" value="立刻登录" onclick="validatePassword()">
+                        <input id="submit1" class="btn btn-primary btn-lg btn-block" type="submit" value="立刻登录"
+                               onclick="validatePassword()">
                     </div>
                 </form>
             </div>
@@ -218,25 +221,25 @@
 
     /* 天气预报 */
     $.getScript(
-            'http://php.weather.sina.com.cn/iframe/index/w_cl.php?code=js&day=0&city=&dfc=1&charset=utf-8',
-            function (a) {
-                var s = "", r = "", q = "";
-                for (s in window.SWther.w) {
-                    q = SWther.w[s][0];
-                    r = {
-                        city: s,
-                        date: SWther.add.now.split(" ")[0] || "",
-                        day_weather: q.s1,
-                        night_weather: q.s2,
-                        day_temp: q.t1,
-                        night_temp: q.t2,
-                        day_wind: q.p1,
-                        night_wind: q.p2
-                    }, $("#w").html(
-                        "[" + r.city + "]" + " " + q.s1 + " "
-                        + q.t1 + "℃");
-                }
-            });
+        'http://php.weather.sina.com.cn/iframe/index/w_cl.php?code=js&day=0&city=&dfc=1&charset=utf-8',
+        function (a) {
+            var s = "", r = "", q = "";
+            for (s in window.SWther.w) {
+                q = SWther.w[s][0];
+                r = {
+                    city: s,
+                    date: SWther.add.now.split(" ")[0] || "",
+                    day_weather: q.s1,
+                    night_weather: q.s2,
+                    day_temp: q.t1,
+                    night_temp: q.t2,
+                    day_wind: q.p1,
+                    night_wind: q.p2
+                }, $("#w").html(
+                    "[" + r.city + "]" + " " + q.s1 + " "
+                    + q.t1 + "℃");
+            }
+        });
 </script>
 </body>
 </html>
