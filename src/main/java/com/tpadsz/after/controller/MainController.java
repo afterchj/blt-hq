@@ -1,6 +1,5 @@
 package com.tpadsz.after.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tpadsz.after.entity.Blog;
@@ -127,12 +126,12 @@ public class MainController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(User user, HttpSession session) {
-        logger.info("username=" + user.getUname() + ",pwd=" + user.getPwd());
+//        logger.info("username=" + user.getUname() + ",pwd=" + user.getPwd());
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUname(), user.getPwd(), user.getRememberMe());
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
         User loginUser = userService.selectByUsername(user.getUname());
-        logger.info("user:" + JSON.toJSONString(loginUser));
+//        logger.info("user:" + JSON.toJSONString(loginUser));
         session.setAttribute("loginUser", loginUser);
         return "/loginSuccess";
     }

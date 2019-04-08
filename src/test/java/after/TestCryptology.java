@@ -1,4 +1,4 @@
-package com.tpadsz.after;
+package after;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;

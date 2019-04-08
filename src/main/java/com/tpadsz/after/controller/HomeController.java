@@ -4,7 +4,6 @@ package com.tpadsz.after.controller;
 import com.tpadsz.after.entity.User;
 import com.tpadsz.after.service.UserService;
 import com.tpadsz.after.utils.Constants;
-import com.tpadsz.after.utils.WSClientUtil;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -50,12 +49,6 @@ public class HomeController {
         if (params == null) {
             params = msg;
         }
-        final String finalParams = params;
-        new Thread(new Runnable() {
-            public void run() {
-                WSClientUtil.sendMsg(finalParams);
-            }
-        }).start();
         log.info("show-->" + params);
         return msg;
     }

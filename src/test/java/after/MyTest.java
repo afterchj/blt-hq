@@ -1,16 +1,13 @@
-package com.tpadsz.after;
+package after;
 
-import com.alibaba.fastjson.JSON;
 import com.tpadsz.after.utils.SpringUtils;
 import com.tpadsz.after.utils.PropertiesUtils;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.amqp.core.AmqpTemplate;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

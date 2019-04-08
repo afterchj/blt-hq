@@ -12,7 +12,7 @@
 
     <mvc:annotation-driven/>
     <!-- 开启注解模式 -->
-    <context:component-scan base-package="com.tpadsz.after"/>
+    <context:component-scan base-package="com.tpadsz.after.controller"/>
     <!-- aop -->
     <aop:aspectj-autoproxy expose-proxy="true"/>
     <!-- 静态资源映射 -->
@@ -20,7 +20,7 @@
     <mvc:resources mapping="/style/**" location="/style/"/>
     <!-- 开启注解模式 -->
 
-    <!--<bean id="socketClient" class="com.tpadsz.after.utilss.WSClientUtil"></bean>-->
+    <!--<bean id="socketClient" class="java.after.utilss.WSClientUtil"></bean>-->
     <!--  websocket消息接收与处理类 -->
     <bean id="websocket" class="com.tpadsz.after.websocket.WebSocketHandler"/>
     <!--<bean id="fileupload" class="com.tpadsz.after.websocket.FileUploadEndPoint"/>-->

@@ -1,4 +1,4 @@
-package com.tpadsz.after;
+package after;
 
 import java.io.*;
 import java.net.Socket;

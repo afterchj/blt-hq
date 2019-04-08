@@ -1,4 +1,4 @@
-package com.tpadsz.after;
+package after;
 
 import com.tpadsz.after.entity.User;
 import org.junit.Test;

@@ -1,7 +1,6 @@
 package com.tpadsz.after.utils;
 
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

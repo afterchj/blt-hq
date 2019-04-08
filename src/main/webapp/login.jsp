@@ -16,8 +16,8 @@
     <form method="post" action="login" class="bs-example bs-example-form" role="form">
         <table>
             <tr>
-                <td colspan="2">
-                    <h1>用户登录</h1>
+                <td colspan="2" style="border-bottom: 1px solid ghostwhite">
+                    <label style="font-size: large;font-weight: bold">账密登录</label>&nbsp;&nbsp;&nbsp;&nbsp;<label style="font-size: large;font-weight: bold">手机验证码登录</label>
                 </td>
             </tr>
             <tr>
@@ -32,16 +32,15 @@
                 <td colspan="2">
                     <div class="input-group">
                         <span class="input-group-addon">密码：</span>
-                        <input type="password" name="pwd" id="password" placeholder="password"
-                               class="form-control">
+                        <input type="password" name="pwd" id="password" placeholder="password" class="form-control">
                     </div>
                 </td>
             </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="checkbox" name="rememberMe" checked="checked"/>&nbsp;记住密码
-                </td>
-            </tr>
+            <%--<tr>--%>
+                <%--<td colspan="2">--%>
+                    <%--<input type="checkbox" name="rememberMe" checked="checked"/>&nbsp;记住密码--%>
+                <%--</td>--%>
+            <%--</tr>--%>
             <!--<tr>
                 <td>
                     <div class="input-group">
