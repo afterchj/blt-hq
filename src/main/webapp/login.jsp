@@ -36,11 +36,11 @@
                     </div>
                 </td>
             </tr>
-            <%--<tr>--%>
-                <%--<td colspan="2">--%>
-                    <%--<input type="checkbox" name="rememberMe" checked="checked"/>&nbsp;记住密码--%>
-                <%--</td>--%>
-            <%--</tr>--%>
+            <tr>
+                <td colspan="2">
+                    <input type="checkbox" name="rememberMe" checked="checked"/>&nbsp;记住密码
+                </td>
+            </tr>
             <!--<tr>
                 <td>
                     <div class="input-group">

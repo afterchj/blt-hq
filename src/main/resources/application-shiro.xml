@@ -27,7 +27,7 @@
         <!-- 缓存管理器 -->
         <property name="cacheManager" ref="cacheManager"/>
         <!--记住密码 remenberMe配置 -->
-        <property name="rememberMeManager" ref="rememberMeManager"/>
+        <!--<property name="rememberMeManager" ref="rememberMeManager"/>-->
     </bean>
 
     <!-- remenberMe配置 -->
