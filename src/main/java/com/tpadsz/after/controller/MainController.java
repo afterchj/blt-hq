@@ -9,6 +9,7 @@ import com.tpadsz.after.entity.UserRole;
 import com.tpadsz.after.entity.UserRoleTemp;
 import com.tpadsz.after.realm.ShiroDbRealm;
 import com.tpadsz.after.service.*;
+import com.tpadsz.after.utils.Encryption;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -128,7 +129,7 @@ public class MainController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(User user, HttpSession session) {
         logger.info("username=" + user.getUname() + ",pwd=" + user.getPwd());
-        UsernamePasswordToken token = new UsernamePasswordToken(user.getUname(), user.getPwd(), user.getRememberMe());
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUname(), Encryption.getMD5Str(user.getPwd()));
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
         User loginUser = userService.selectByUsername(user.getUname());
@@ -157,8 +158,7 @@ public class MainController {
      */
     @ResponseBody
     @RequestMapping(value = "/user/checkUser", method = RequestMethod.GET)
-    public String checkUser(String username, HttpServletRequest resqust,
-                            HttpServletResponse response) {
+    public String checkUser(String username, HttpServletRequest resqust, HttpServletResponse response) {
         Boolean b = userService.userIsExist(username);
         String result = b ? "true" : "false";
         return result;
